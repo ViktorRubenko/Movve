@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C58314300332B3688067CB7 /* Pods_Movve.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6CAC062A6600C9529283C7A /* Pods_Movve.framework */; };
 		E340AE832844262B008A2AD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E340AE822844262B008A2AD4 /* AppDelegate.swift */; };
 		E340AE852844262B008A2AD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E340AE842844262B008A2AD4 /* SceneDelegate.swift */; };
 		E340AE872844262B008A2AD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E340AE862844262B008A2AD4 /* ViewController.swift */; };
@@ -16,6 +17,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AECC3FBDA4719C7A1A21507A /* Pods-Movve.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movve.release.xcconfig"; path = "Target Support Files/Pods-Movve/Pods-Movve.release.xcconfig"; sourceTree = "<group>"; };
+		B7AC27DC8AE92B752D0AF569 /* Pods-Movve.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movve.debug.xcconfig"; path = "Target Support Files/Pods-Movve/Pods-Movve.debug.xcconfig"; sourceTree = "<group>"; };
+		C6CAC062A6600C9529283C7A /* Pods_Movve.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Movve.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E340AE7F2844262B008A2AD4 /* Movve.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Movve.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E340AE822844262B008A2AD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E340AE842844262B008A2AD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -31,17 +35,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C58314300332B3688067CB7 /* Pods_Movve.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1047ECA7366E881DEC7A07E7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B7AC27DC8AE92B752D0AF569 /* Pods-Movve.debug.xcconfig */,
+				AECC3FBDA4719C7A1A21507A /* Pods-Movve.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		E340AE762844262B008A2AD4 = {
 			isa = PBXGroup;
 			children = (
 				E340AE812844262B008A2AD4 /* Movve */,
 				E340AE802844262B008A2AD4 /* Products */,
+				1047ECA7366E881DEC7A07E7 /* Pods */,
+				E364C42A6EB0473BB705116D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +83,14 @@
 			path = Movve;
 			sourceTree = "<group>";
 		};
+		E364C42A6EB0473BB705116D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C6CAC062A6600C9529283C7A /* Pods_Movve.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +98,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E340AE932844262D008A2AD4 /* Build configuration list for PBXNativeTarget "Movve" */;
 			buildPhases = (
+				196D24D72CEEF92CEC82D4B7 /* [CP] Check Pods Manifest.lock */,
 				E340AE7B2844262B008A2AD4 /* Sources */,
 				E340AE7C2844262B008A2AD4 /* Frameworks */,
 				E340AE7D2844262B008A2AD4 /* Resources */,
+				C61DCA37AB176E58A9BC32F1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -132,6 +158,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		196D24D72CEEF92CEC82D4B7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Movve-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C61DCA37AB176E58A9BC32F1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Movve/Pods-Movve-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Movve/Pods-Movve-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Movve/Pods-Movve-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E340AE7B2844262B008A2AD4 /* Sources */ = {
@@ -284,6 +352,7 @@
 		};
 		E340AE942844262D008A2AD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B7AC27DC8AE92B752D0AF569 /* Pods-Movve.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -313,6 +382,7 @@
 		};
 		E340AE952844262D008A2AD4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AECC3FBDA4719C7A1A21507A /* Pods-Movve.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
