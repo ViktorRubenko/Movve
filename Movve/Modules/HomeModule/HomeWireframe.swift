@@ -30,6 +30,14 @@ final class HomeWireframe: BaseWireframe<HomeViewController> {
 // MARK: - Extensions -
 
 extension HomeWireframe: HomeWireframeInterface {
+    func navigateToMovieDetails(id: Int) {
+        print("nav to movie")
+    }
+    
+    func navigateToTVDetails(id: Int) {
+        print("nav to tv")
+    }
+    
 }
 
 extension HomeWireframe: TabBarViewType {

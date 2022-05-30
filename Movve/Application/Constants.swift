@@ -15,4 +15,10 @@ enum Constants {
         static let discoverMovies = base.appendingPathComponent("/discover/movie")
         static let discoverTVShows = base.appendingPathComponent("/discover/tv")
     }
+    
+    enum ImagesURL {
+        static let base = URL(string: "https://image.tmdb.org/t/p")!
+        static let original = base.appendingPathComponent("/original")
+        static let w500 = base.appendingPathComponent("/w500")
+    }
 }

@@ -11,9 +11,21 @@
 import Foundation
 
 final class HomeInteractor {
+    private let movieDBService: MovieDBService
+    
+    init(movieDBService: MovieDBService = .shared) {
+        self.movieDBService = movieDBService
+    }
 }
 
 // MARK: - Extensions -
 
 extension HomeInteractor: HomeInteractorInterface {
+    func getMovies(completion: @escaping (Result<[DiscoveredMovie], Error>) -> Void) {
+        movieDBService.discoverMovies(completion: completion)
+    }
+    
+    func getTVShows(completion: @escaping (Result<[DiscoveredTVShow], Error>) -> Void) {
+        movieDBService.discoverTVShows(completion: completion)
+    }
 }

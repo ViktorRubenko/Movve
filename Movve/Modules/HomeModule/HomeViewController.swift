@@ -11,20 +11,171 @@
 import UIKit
 
 final class HomeViewController: UIViewController {
-
+    
     // MARK: - Public properties -
-
+    
     var presenter: HomePresenterInterface!
-
+    
+    // MARK: - Private properties -
+    
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { sectionIndex, _ in
+                self.createSectionLayout(section: sectionIndex)
+            }))
+        collectionView.register(
+            DiscoveredCollectionViewCell.self,
+            forCellWithReuseIdentifier: DiscoveredCollectionViewCell.identifier
+        )
+        collectionView.register(
+            DiscoveredHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: DiscoveredHeaderView.identifier
+        )
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .clear
+        return collectionView
+    }()
+    
     // MARK: - Lifecycle -
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupViews()
+        
+        presenter.loadMovies()
+        presenter.loadTVShows()
     }
-
+    
 }
 
 // MARK: - Extensions -
 
 extension HomeViewController: HomeViewInterface {
+    func reloadMovies() {
+        collectionView.reloadSections([presenter.sections.firstIndex(of: .movies) ?? 0])
+    }
+    
+    func reloadTVShows() {
+        collectionView.reloadSections([presenter.sections.firstIndex(of: .tvShows) ?? 1])
+    }
+}
+
+// MARK: - Methods -
+
+extension HomeViewController {
+    private func setupViews() {
+        view.backgroundColor = UIColor(red: 23/255, green: 23/255, blue: 33/255, alpha: 1)
+        
+        view.addSubview(collectionView)
+        
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    private func createSectionLayout(section: Int) -> NSCollectionLayoutSection {
+        let sectionType = presenter.sections[section]
+        switch sectionType {
+        case .movies:
+            let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.45), heightDimension: .estimated(44))
+            let item = NSCollectionLayoutItem(layoutSize: layoutSize)
+            
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitem: item, count: 1)
+            group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
+            
+            let headerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(44)
+            )
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top
+            )
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.boundarySupplementaryItems = [sectionHeader]
+            section.orthogonalScrollingBehavior = .continuous
+            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+            
+            
+            return section
+        case .tvShows:
+            let layoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.4), heightDimension: .estimated(44))
+            let item = NSCollectionLayoutItem(layoutSize: layoutSize)
+            
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: layoutSize, subitem: item, count: 1)
+            group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
+            
+            let headerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(44)
+            )
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top
+            )
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.boundarySupplementaryItems = [sectionHeader]
+            section.orthogonalScrollingBehavior = .continuous
+            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+            
+            return section
+        }
+    }
+}
+
+// MARK: - UICollectionView Delegate/DS -
+
+extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        presenter.sections.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let sectionType = presenter.sections[section]
+        switch sectionType {
+        case .movies:
+            return presenter.numberOfMovies
+        case .tvShows:
+            return presenter.numberOfTVShows
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let sectionType = presenter.sections[indexPath.section]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DiscoveredCollectionViewCell.identifier, for: indexPath) as! DiscoveredCollectionViewCell
+        switch sectionType {
+        case .movies:
+            cell.configure(presenter.movie(at: indexPath))
+        case .tvShows:
+            cell.configure(presenter.tvShow(at: indexPath))
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerView = collectionView.dequeueReusableSupplementaryView(
+            ofKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: DiscoveredHeaderView.identifier,
+            for: indexPath) as! DiscoveredHeaderView
+        let sectionType = presenter.sections[indexPath.section]
+        switch sectionType {
+        case .movies:
+            headerView.text = "Popular Movie"
+        case .tvShows:
+            headerView.text = "TV Show"
+        }
+        return headerView
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presenter.itemSelected(at: indexPath)
+    }
 }
