@@ -9,7 +9,6 @@
 //
 
 import UIKit
-import Swinject
 
 final class TabBarWireframe: BaseWireframe<TabBarViewController> {
 
