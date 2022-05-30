@@ -1,0 +1,18 @@
+//
+//  Constants.swift
+//  Movve
+//
+//  Created by Victor Rubenko on 30.05.2022.
+//
+
+import Foundation
+
+enum Constants {
+    enum API {
+        static let base = URL(string: "https://api.themoviedb.org/3")!
+        static let movie = base.appendingPathComponent("/movie")
+        static let tvshow = base.appendingPathComponent("/tv")
+        static let discoverMovies = base.appendingPathComponent("/discover/movie")
+        static let discoverTVShows = base.appendingPathComponent("/discover/tv")
+    }
+}

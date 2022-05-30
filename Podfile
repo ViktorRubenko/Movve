@@ -6,5 +6,6 @@ target 'Movve' do
   use_frameworks!
   
   pod 'Swinject'
+  pod 'Alamofire'
 
 end
