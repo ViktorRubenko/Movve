@@ -51,4 +51,8 @@ extension UIColor {
     static var ratingFrontColor: UIColor {
         UIColor(hex: "fdc432", alpha: 1)
     }
+    
+    static var buttonColor: UIColor {
+        UIColor(hex: "e11a38", alpha: 1)
+    }
 }

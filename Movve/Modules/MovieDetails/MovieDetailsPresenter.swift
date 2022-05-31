@@ -64,7 +64,7 @@ extension MovieDetailsPresenter: MovieDetailsPresenterInterface {
     }
     
     var sections: [MovieDetailsSectionType] {
-        [.posterInfo, .rating, .overview, .cast]
+        [.posterInfo, .rating, .overview, .cast, .watchNow]
     }
     
     func loadMovieDetails() {
@@ -87,6 +87,13 @@ extension MovieDetailsPresenter: MovieDetailsPresenterInterface {
                 print(error)
             }
         }
+    }
+    
+    func selectWatchNow() {
+        guard let homepage = movie?.homepage, let url = URL(string: homepage) else {
+            return
+        }
+        wireframe.openURL(url: url)
     }
     
 }

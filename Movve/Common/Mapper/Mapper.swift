@@ -101,7 +101,8 @@ extension Mapper: MovieDBMapperInterface {
             genres: genres,
             duration: runtimeToDuration(movie.runtime ?? 0.0),
             rating: movie.voteAverage,
-            overview: movie.overview
+            overview: movie.overview,
+            homepage: URL(string: movie.homepage ?? "")
         )
     }
     

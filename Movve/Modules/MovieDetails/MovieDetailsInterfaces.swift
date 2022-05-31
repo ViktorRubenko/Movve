@@ -11,10 +11,11 @@
 import UIKit
 
 enum MovieDetailsSectionType {
-    case posterInfo, overview, cast, rating
+    case posterInfo, overview, cast, rating, watchNow
 }
 
 protocol MovieDetailsWireframeInterface: WireframeInterface {
+    func openURL(url: URL)
 }
 
 protocol MovieDetailsViewInterface: ViewInterface {
@@ -29,6 +30,7 @@ protocol MovieDetailsPresenterInterface: PresenterInterface {
     
     func loadMovieDetails()
     func loadCast()
+    func selectWatchNow()
 }
 
 protocol MovieDetailsInteractorInterface: InteractorInterface {

@@ -30,4 +30,7 @@ final class MovieDetailsWireframe: BaseWireframe<MovieDetailsViewController> {
 // MARK: - Extensions -
 
 extension MovieDetailsWireframe: MovieDetailsWireframeInterface {
+    func openURL(url: URL) {
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
 }

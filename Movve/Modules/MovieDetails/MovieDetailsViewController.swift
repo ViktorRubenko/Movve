@@ -41,6 +41,10 @@ final class MovieDetailsViewController: UIViewController {
             forCellWithReuseIdentifier: RatingCollectionViewCell.identifier
         )
         collecitonView.register(
+            WatchNowCollectionViewCell.self,
+            forCellWithReuseIdentifier: WatchNowCollectionViewCell.identifier
+        )
+        collecitonView.register(
             CollectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: CollectionHeaderView.identifier
@@ -50,6 +54,7 @@ final class MovieDetailsViewController: UIViewController {
         collecitonView.contentInsetAdjustmentBehavior = .never
         collecitonView.backgroundColor = .clear
         collecitonView.showsVerticalScrollIndicator = false
+        collecitonView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
         return collecitonView
     }()
     
@@ -90,11 +95,12 @@ private extension MovieDetailsViewController {
     }
     
     func setupNavigationBar(offset yOffset: CGFloat = 0.0) {
-        var offset = yOffset
+        var offset = (yOffset - (view.bounds.height * 0.65) + 200) / 44
+
         offset = offset > 1 ? 1 : offset
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = .appBackground.withAlphaComponent(offset - 0.05)
+        appearance.backgroundColor = .appBackground.withAlphaComponent(offset - 0.03)
         appearance.titleTextAttributes = [.foregroundColor: UIColor.appTextColor.withAlphaComponent(offset)]
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
@@ -158,6 +164,16 @@ private extension MovieDetailsViewController {
             )
             section.boundarySupplementaryItems = [sectionHeader]
             return section
+        case .watchNow:
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .estimated(10)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: itemSize, subitem: item, count: 1)
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
+            return section
         }
     }
 }
@@ -191,6 +207,8 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
             return 1
         case .cast:
             return presenter.castMembers.count
+        case .watchNow:
+            return 1
         }
     }
     
@@ -233,6 +251,15 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
                 cell.rating = movieDetails.rating
             }
             return cell
+        case .watchNow:
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: WatchNowCollectionViewCell.identifier,
+                for: indexPath
+            ) as! WatchNowCollectionViewCell
+            cell.buttonAction = { [weak self] in
+                self?.presenter.selectWatchNow()
+            }
+            return cell
         }
     }
     
@@ -253,7 +280,7 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offset = scrollView.contentOffset.y / (view.bounds.height * 0.65)
+        let offset = scrollView.contentOffset.y
         setupNavigationBar(offset: offset)
     }
     

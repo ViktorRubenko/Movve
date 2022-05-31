@@ -15,4 +15,5 @@ struct MovieDetailsModel {
     let duration: String
     let rating: Double
     let overview: String
+    let homepage: URL?
 }
