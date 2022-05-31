@@ -47,4 +47,8 @@ extension UIColor {
     static var appTextColor: UIColor {
         UIColor(hex: "ffffff", alpha: 1)
     }
+    
+    static var ratingFrontColor: UIColor {
+        UIColor(hex: "fdc432", alpha: 1)
+    }
 }
