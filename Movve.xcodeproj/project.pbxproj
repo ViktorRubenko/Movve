@@ -27,6 +27,12 @@
 		E36485302844334A00E33155 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E364852B2844334A00E33155 /* HomeViewController.swift */; };
 		E36485312844334A00E33155 /* HomeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E364852C2844334A00E33155 /* HomeInteractor.swift */; };
 		E36485322844334A00E33155 /* HomeWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E364852D2844334A00E33155 /* HomeWireframe.swift */; };
+		E37C2DD52846410300C78CC1 /* PosterInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37C2DD42846410300C78CC1 /* PosterInfoView.swift */; };
+		E37C2DD8284647A100C78CC1 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37C2DD7284647A100C78CC1 /* GradientView.swift */; };
+		E37C2DDA284649B900C78CC1 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37C2DD9284649B900C78CC1 /* UIColor+Extension.swift */; };
+		E37C2DE028466AFA00C78CC1 /* PosterInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37C2DDF28466AFA00C78CC1 /* PosterInfoCollectionViewCell.swift */; };
+		E37C2DE328466EF400C78CC1 /* OverviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37C2DE228466EF400C78CC1 /* OverviewCollectionViewCell.swift */; };
+		E37C2DE5284671F800C78CC1 /* CastMemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37C2DE4284671F800C78CC1 /* CastMemberCollectionViewCell.swift */; };
 		E380DAD32844D1E600D7A686 /* TabBarViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E380DAD22844D1E600D7A686 /* TabBarViewType.swift */; };
 		E380DAE72844E34200D7A686 /* FavoritesInterfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = E380DAE22844E34200D7A686 /* FavoritesInterfaces.swift */; };
 		E380DAE82844E34200D7A686 /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E380DAE32844E34200D7A686 /* FavoritesPresenter.swift */; };
@@ -35,7 +41,7 @@
 		E380DAEB2844E34200D7A686 /* FavoritesWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E380DAE62844E34200D7A686 /* FavoritesWireframe.swift */; };
 		E38E8D772845546300996BA1 /* DiscoveredModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38E8D762845546300996BA1 /* DiscoveredModel.swift */; };
 		E38E8D7E284557CB00996BA1 /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38E8D7D284557CB00996BA1 /* Mapper.swift */; };
-		E3AD91E228456D9B000538C8 /* DiscoveredHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3AD91E128456D9B000538C8 /* DiscoveredHeaderView.swift */; };
+		E3AD91E228456D9B000538C8 /* CollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3AD91E128456D9B000538C8 /* CollectionHeaderView.swift */; };
 		E3BBD7AB2845308700FB0CD5 /* DiscoveredMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BBD7AA2845308700FB0CD5 /* DiscoveredMovie.swift */; };
 		E3BBD7AD284542E400FB0CD5 /* DiscoverTVShows.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BBD7AC284542E400FB0CD5 /* DiscoverTVShows.swift */; };
 		E3BBD7AF2845431800FB0CD5 /* DiscoveredTVShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BBD7AE2845431800FB0CD5 /* DiscoveredTVShow.swift */; };
@@ -86,6 +92,12 @@
 		E364852B2844334A00E33155 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		E364852C2844334A00E33155 /* HomeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInteractor.swift; sourceTree = "<group>"; };
 		E364852D2844334A00E33155 /* HomeWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeWireframe.swift; sourceTree = "<group>"; };
+		E37C2DD42846410300C78CC1 /* PosterInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterInfoView.swift; sourceTree = "<group>"; };
+		E37C2DD7284647A100C78CC1 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		E37C2DD9284649B900C78CC1 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		E37C2DDF28466AFA00C78CC1 /* PosterInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterInfoCollectionViewCell.swift; sourceTree = "<group>"; };
+		E37C2DE228466EF400C78CC1 /* OverviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		E37C2DE4284671F800C78CC1 /* CastMemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastMemberCollectionViewCell.swift; sourceTree = "<group>"; };
 		E380DAD22844D1E600D7A686 /* TabBarViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewType.swift; sourceTree = "<group>"; };
 		E380DAE22844E34200D7A686 /* FavoritesInterfaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesInterfaces.swift; sourceTree = "<group>"; };
 		E380DAE32844E34200D7A686 /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
@@ -94,7 +106,7 @@
 		E380DAE62844E34200D7A686 /* FavoritesWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesWireframe.swift; sourceTree = "<group>"; };
 		E38E8D762845546300996BA1 /* DiscoveredModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredModel.swift; sourceTree = "<group>"; };
 		E38E8D7D284557CB00996BA1 /* Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
-		E3AD91E128456D9B000538C8 /* DiscoveredHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredHeaderView.swift; sourceTree = "<group>"; };
+		E3AD91E128456D9B000538C8 /* CollectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionHeaderView.swift; sourceTree = "<group>"; };
 		E3BBD7AA2845308700FB0CD5 /* DiscoveredMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredMovie.swift; sourceTree = "<group>"; };
 		E3BBD7AC284542E400FB0CD5 /* DiscoverTVShows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverTVShows.swift; sourceTree = "<group>"; };
 		E3BBD7AE2845431800FB0CD5 /* DiscoveredTVShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoveredTVShow.swift; sourceTree = "<group>"; };
@@ -239,6 +251,8 @@
 				E3D169DF2844F1C20039FA11 /* Models */,
 				E3D169DA2844F13F0039FA11 /* Services */,
 				E38E8D7D284557CB00996BA1 /* Mapper.swift */,
+				E37C2DDB28464D1C00C78CC1 /* Views */,
+				E37C2DDC28464D9F00C78CC1 /* Extensions */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -249,6 +263,34 @@
 				C6CAC062A6600C9529283C7A /* Pods_Movve.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E37C2DDB28464D1C00C78CC1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E3AD91E128456D9B000538C8 /* CollectionHeaderView.swift */,
+				E37C2DD42846410300C78CC1 /* PosterInfoView.swift */,
+				E37C2DD7284647A100C78CC1 /* GradientView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E37C2DDC28464D9F00C78CC1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E37C2DD9284649B900C78CC1 /* UIColor+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E37C2DE128466B9B00C78CC1 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E37C2DDF28466AFA00C78CC1 /* PosterInfoCollectionViewCell.swift */,
+				E37C2DE228466EF400C78CC1 /* OverviewCollectionViewCell.swift */,
+				E37C2DE4284671F800C78CC1 /* CastMemberCollectionViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		E380DAD62844E1FC00D7A686 /* Modules */ = {
@@ -294,7 +336,6 @@
 			isa = PBXGroup;
 			children = (
 				E38E8D752845545800996BA1 /* Cells */,
-				E3AD91E128456D9B000538C8 /* DiscoveredHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -307,6 +348,7 @@
 				E3D169C02844EC5A0039FA11 /* MovieDetailsViewController.swift */,
 				E3D169C12844EC5A0039FA11 /* MovieDetailsInteractor.swift */,
 				E3D169C22844EC5A0039FA11 /* MovieDetailsWireframe.swift */,
+				E37C2DE128466B9B00C78CC1 /* Cells */,
 			);
 			path = MovieDetails;
 			sourceTree = "<group>";
@@ -483,6 +525,7 @@
 				E3BBD7B32845458100FB0CD5 /* TVSeason.swift in Sources */,
 				E3D169D52844EE480039FA11 /* RootWireframe.swift in Sources */,
 				E3D169C42844EC5A0039FA11 /* MovieDetailsPresenter.swift in Sources */,
+				E37C2DD8284647A100C78CC1 /* GradientView.swift in Sources */,
 				E3D169C52844EC5A0039FA11 /* MovieDetailsViewController.swift in Sources */,
 				E3BBD7AD284542E400FB0CD5 /* DiscoverTVShows.swift in Sources */,
 				E364851E2844321400E33155 /* InteractorInterface.swift in Sources */,
@@ -490,15 +533,18 @@
 				E364851D2844321400E33155 /* ViewInterface.swift in Sources */,
 				E364852F2844334A00E33155 /* HomePresenter.swift in Sources */,
 				E3D169E92844F5A50039FA11 /* Credits.swift in Sources */,
-				E3AD91E228456D9B000538C8 /* DiscoveredHeaderView.swift in Sources */,
+				E3AD91E228456D9B000538C8 /* CollectionHeaderView.swift in Sources */,
+				E37C2DD52846410300C78CC1 /* PosterInfoView.swift in Sources */,
 				E3D169C62844EC5A0039FA11 /* MovieDetailsInteractor.swift in Sources */,
 				E3648525284432B800E33155 /* TabBarPresenter.swift in Sources */,
+				E37C2DE028466AFA00C78CC1 /* PosterInfoCollectionViewCell.swift in Sources */,
 				E380DAE72844E34200D7A686 /* FavoritesInterfaces.swift in Sources */,
 				E3D169D92844F13C0039FA11 /* MovieDBService.swift in Sources */,
 				E36485322844334A00E33155 /* HomeWireframe.swift in Sources */,
 				E380DAD32844D1E600D7A686 /* TabBarViewType.swift in Sources */,
 				E3648526284432B800E33155 /* TabBarViewController.swift in Sources */,
 				E364852E2844334A00E33155 /* HomeInterfaces.swift in Sources */,
+				E37C2DDA284649B900C78CC1 /* UIColor+Extension.swift in Sources */,
 				E380DAEB2844E34200D7A686 /* FavoritesWireframe.swift in Sources */,
 				E3D169C72844EC5A0039FA11 /* MovieDetailsWireframe.swift in Sources */,
 				E3D169DE2844F1BF0039FA11 /* Movie.swift in Sources */,
@@ -507,6 +553,7 @@
 				E38E8D772845546300996BA1 /* DiscoveredModel.swift in Sources */,
 				E3D169DC2844F1740039FA11 /* UserService.swift in Sources */,
 				E380DAEA2844E34200D7A686 /* FavoritesInteractor.swift in Sources */,
+				E37C2DE5284671F800C78CC1 /* CastMemberCollectionViewCell.swift in Sources */,
 				E38E8D7E284557CB00996BA1 /* Mapper.swift in Sources */,
 				E380DAE82844E34200D7A686 /* FavoritesPresenter.swift in Sources */,
 				E3BBD7AF2845431800FB0CD5 /* DiscoveredTVShow.swift in Sources */,
@@ -514,6 +561,7 @@
 				E364851B2844321400E33155 /* UIStoryboardExtension.swift in Sources */,
 				E340AE832844262B008A2AD4 /* AppDelegate.swift in Sources */,
 				E3648527284432B800E33155 /* TabBarWireframe.swift in Sources */,
+				E37C2DE328466EF400C78CC1 /* OverviewCollectionViewCell.swift in Sources */,
 				E3D169FD28450B560039FA11 /* ProductionCountry.swift in Sources */,
 				E36485302844334A00E33155 /* HomeViewController.swift in Sources */,
 				E3D169C32844EC5A0039FA11 /* MovieDetailsInterfaces.swift in Sources */,
