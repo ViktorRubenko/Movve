@@ -30,6 +30,7 @@ struct TVShow: Codable {
     let status, tagline, type: String
     let voteAverage: Double
     let voteCount: Int
+    let backdropPath: String?
 
     enum CodingKeys: String, CodingKey {
         case adult
@@ -52,5 +53,6 @@ struct TVShow: Codable {
         case status, tagline, type
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
+        case backdropPath = "backdrop_path"
     }
 }
