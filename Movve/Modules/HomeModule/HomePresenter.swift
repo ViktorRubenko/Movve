@@ -18,6 +18,8 @@ final class HomePresenter {
     private let interactor: HomeInteractorInterface
     private let wireframe: HomeWireframeInterface
     
+    private let mapper: MovieDBMapperInterface
+    
     private var movies: [DiscoveredMovie] = [] {
         didSet {
             view.reloadMovies()
@@ -35,11 +37,13 @@ final class HomePresenter {
     init(
         view: HomeViewInterface,
         interactor: HomeInteractorInterface,
-        wireframe: HomeWireframeInterface
+        wireframe: HomeWireframeInterface,
+        mapper: MovieDBMapperInterface
     ) {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
+        self.mapper = mapper
     }
 }
 
@@ -55,7 +59,7 @@ extension HomePresenter: HomePresenterInterface {
     }
     
     func movie(at indexPath: IndexPath) -> DiscoveredModel {
-        Mapper.discoveredMovieToDiscoveredModel(movies[indexPath.row])
+        mapper.discoveredMovieToDiscoveredModel(movies[indexPath.row])
     }
     
     func loadMovies() {
@@ -75,7 +79,7 @@ extension HomePresenter: HomePresenterInterface {
     }
     
     func tvShow(at indexPath: IndexPath) -> DiscoveredModel {
-        Mapper.discoveredTVShowToDiscoveredModel(tvShows[indexPath.row])
+        mapper.discoveredTVShowToDiscoveredModel(tvShows[indexPath.row])
     }
     
     func loadTVShows() {

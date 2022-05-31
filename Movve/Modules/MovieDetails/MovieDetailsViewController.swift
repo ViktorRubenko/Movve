@@ -49,6 +49,7 @@ final class MovieDetailsViewController: UIViewController {
         collecitonView.dataSource = self
         collecitonView.contentInsetAdjustmentBehavior = .never
         collecitonView.backgroundColor = .clear
+        collecitonView.showsVerticalScrollIndicator = false
         return collecitonView
     }()
     
@@ -203,13 +204,7 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
                 for: indexPath
             ) as! PosterInfoCollectionViewCell
             if let movieDetails = presenter.movieDetails {
-                cell.configure(
-                    posterURL: Constants.ImagesURL.w500.appendingPathComponent(movieDetails.posterPath ?? ""),
-                    title: movieDetails.title,
-                    releaseYear: movieDetails.releaseDate,
-                    genres: movieDetails.genres.compactMap { $0.name }.joined(separator: ", "),
-                    duration: String(movieDetails.runtime ?? 0.0)
-                )
+                cell.configure(movieDetails)
             }
             return cell
         case .overview:
@@ -222,16 +217,12 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
             }
             return cell
         case .cast:
-            let castMember = presenter.castMembers[indexPath.row]
+            let castMemberModel = presenter.castMembers[indexPath.row]
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: CastMemberCollectionViewCell.identifier,
                 for: indexPath
             ) as! CastMemberCollectionViewCell
-            cell.configure(
-                imageURL: Constants.ImagesURL.w500.appendingPathComponent(castMember.profilePath ?? ""),
-                name: castMember.name,
-                character: castMember.character
-            )
+            cell.configure(castMemberModel)
             return cell
         case .rating:
             let cell = collectionView.dequeueReusableCell(
@@ -239,7 +230,7 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
                 for: indexPath
             ) as! RatingCollectionViewCell
             if let movieDetails = presenter.movieDetails {
-                cell.rating = movieDetails.voteAverage
+                cell.rating = movieDetails.rating
             }
             return cell
         }

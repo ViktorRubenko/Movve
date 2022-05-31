@@ -33,19 +33,13 @@ extension PosterInfoCollectionViewCell {
         }
     }
     
-    func configure(
-        posterURL: URL?,
-        title: String,
-        releaseYear: String,
-        genres: String,
-        duration: String
-    ) {
+    func configure(_ model: MovieDetailsModel) {
         posterInfoView.configure(
-            posterURL: posterURL,
-            title: title,
-            releaseYear: releaseYear,
-            genres: genres,
-            duration: duration
+            posterURL: model.posterURL,
+            title: model.title,
+            releaseYear: model.releaseYear,
+            genres: model.genres,
+            duration: model.duration
         )
     }
 }

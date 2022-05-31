@@ -83,15 +83,16 @@ extension CastMemberCollectionViewCell {
         }
     }
     
-    func configure(imageURL: URL?, name: String, character: String) {
-        nameLabel.text = name
-        characterLabel.text = character
-        guard let imageURL = imageURL else {
+    func configure(_ model: CastMemberModel) {
+        nameLabel.text = model.name
+        characterLabel.text = model.character
+        guard let imageURL = model.imageURL else {
+            imageView.image = UIImage(named: "human_placholder")
             return
         }
         imageView.kf.setImage(
             with: imageURL,
-            placeholder: UIImage(systemName: "person"),
+            placeholder: UIImage(named: "human_placholder"),
             options: nil,
             completionHandler: nil
         )

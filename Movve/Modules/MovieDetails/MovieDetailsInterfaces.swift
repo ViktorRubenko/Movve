@@ -23,8 +23,8 @@ protocol MovieDetailsViewInterface: ViewInterface {
 }
 
 protocol MovieDetailsPresenterInterface: PresenterInterface {
-    var movieDetails: Movie? { get }
-    var castMembers: [CastMember] { get }
+    var movieDetails: MovieDetailsModel? { get }
+    var castMembers: [CastMemberModel] { get }
     var sections: [MovieDetailsSectionType] { get }
     
     func loadMovieDetails()

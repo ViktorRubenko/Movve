@@ -21,7 +21,7 @@ final class HomeWireframe: BaseWireframe<HomeViewController> {
         super.init(viewController: moduleViewController)
 
         let interactor = HomeInteractor()
-        let presenter = HomePresenter(view: moduleViewController, interactor: interactor, wireframe: self)
+        let presenter = HomePresenter(view: moduleViewController, interactor: interactor, wireframe: self, mapper: Mapper.shared)
         moduleViewController.presenter = presenter
     }
 

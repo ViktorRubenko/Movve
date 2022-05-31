@@ -18,6 +18,8 @@ final class MovieDetailsPresenter {
     private let interactor: MovieDetailsInteractorInterface
     private let wireframe: MovieDetailsWireframeInterface
     
+    private let mapper: MovieDBMapperInterface
+    
     private let movieId: Int
     private var movie: Movie? {
         didSet {
@@ -36,11 +38,13 @@ final class MovieDetailsPresenter {
         view: MovieDetailsViewInterface,
         interactor: MovieDetailsInteractorInterface,
         wireframe: MovieDetailsWireframeInterface,
+        mapper: MovieDBMapperInterface,
         movieId: Int
     ) {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
+        self.mapper = mapper
         self.movieId = movieId
     }
 }
@@ -48,12 +52,15 @@ final class MovieDetailsPresenter {
 // MARK: - Extensions -
 
 extension MovieDetailsPresenter: MovieDetailsPresenterInterface {
-    var movieDetails: Movie? {
-        movie
+    var movieDetails: MovieDetailsModel? {
+        guard let movie = movie else {
+            return nil
+        }
+        return mapper.movieToMovieDetailsModel(movie)
     }
     
-    var castMembers: [CastMember] {
-        cast
+    var castMembers: [CastMemberModel] {
+        cast.compactMap { mapper.castMemberToCastMemberModel($0) }
     }
     
     var sections: [MovieDetailsSectionType] {
