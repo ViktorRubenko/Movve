@@ -1,5 +1,5 @@
 //
-//  RatingView.swift
+//  StarsRatingView.swift
 //  Movve
 //
 //  Created by Victor Rubenko on 31.05.2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StarsRating: UIView {
+class StarsRatingView: UIView {
     var rating: Double = 0.0 {
         didSet {
             let intRating = Int(round(rating))
@@ -26,7 +26,9 @@ class StarsRating: UIView {
         self.backColor = backColor
         
         imageViews = (0..<5).map { _ in
-            UIImageView(image: UIImage(named: "Star"))
+            let iv = UIImageView(image: UIImage(systemName: "star.fill"))
+            iv.contentMode = .scaleAspectFit
+            return iv
         }
         super.init(frame: .zero)
         
