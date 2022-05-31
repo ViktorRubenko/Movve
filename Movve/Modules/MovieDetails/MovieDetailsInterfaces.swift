@@ -10,14 +10,28 @@
 
 import UIKit
 
+enum MovieDetailsSectionType {
+    case posterInfo, overview, cast, rating
+}
+
 protocol MovieDetailsWireframeInterface: WireframeInterface {
 }
 
 protocol MovieDetailsViewInterface: ViewInterface {
+    func reloadMovieDetails()
+    func reloadCast()
 }
 
 protocol MovieDetailsPresenterInterface: PresenterInterface {
+    var movieDetails: Movie? { get }
+    var castMembers: [CastMember] { get }
+    var sections: [MovieDetailsSectionType] { get }
+    
+    func loadMovieDetails()
+    func loadCast()
 }
 
 protocol MovieDetailsInteractorInterface: InteractorInterface {
+    func getMovieDetails(id movieId: Int, completion: @escaping (Result<Movie, Error>) -> Void)
+    func getCast(id movieId: Int, completion: @escaping (Result<Credits, Error>) -> Void)
 }

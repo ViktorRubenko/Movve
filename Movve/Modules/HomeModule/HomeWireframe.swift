@@ -31,7 +31,7 @@ final class HomeWireframe: BaseWireframe<HomeViewController> {
 
 extension HomeWireframe: HomeWireframeInterface {
     func navigateToMovieDetails(id: Int) {
-        print("nav to movie")
+        navigationController?.pushWireframe(MovieDetailsWireframe(movieId: id))
     }
     
     func navigateToTVDetails(id: Int) {

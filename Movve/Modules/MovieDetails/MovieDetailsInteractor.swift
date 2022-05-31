@@ -11,9 +11,23 @@
 import Foundation
 
 final class MovieDetailsInteractor {
+    private let movieDBService: MovieDBService
+    
+    init(movieDBService: MovieDBService = .shared) {
+        self.movieDBService = movieDBService
+    }
 }
 
 // MARK: - Extensions -
 
 extension MovieDetailsInteractor: MovieDetailsInteractorInterface {
+    
+    func getMovieDetails(id movieId: Int, completion: @escaping (Result<Movie, Error>) -> Void)  {
+        movieDBService.getMovieDetails(id: movieId, completion: completion)
+    }
+    
+    func getCast(id movieId: Int, completion: @escaping (Result<Credits, Error>) -> Void) {
+        movieDBService.getCredits(id: movieId, completion: completion)
+    }
+    
 }

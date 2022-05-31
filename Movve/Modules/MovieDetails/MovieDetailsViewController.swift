@@ -11,20 +11,259 @@
 import UIKit
 
 final class MovieDetailsViewController: UIViewController {
-
+    
     // MARK: - Public properties -
-
+    
     var presenter: MovieDetailsPresenterInterface!
-
+    
+    // MARK: - Private properties -
+    private lazy var collecitonView: UICollectionView = {
+        let collecitonView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: UICollectionViewCompositionalLayout(sectionProvider: { sectionIndex, _ in
+                self.createCollectionLayout(sectionIndex)
+            })
+        )
+        collecitonView.register(
+            PosterInfoCollectionViewCell.self,
+            forCellWithReuseIdentifier: PosterInfoCollectionViewCell.identifier
+        )
+        collecitonView.register(
+            OverviewCollectionViewCell.self,
+            forCellWithReuseIdentifier: OverviewCollectionViewCell.identifier
+        )
+        collecitonView.register(
+            CastMemberCollectionViewCell.self,
+            forCellWithReuseIdentifier: CastMemberCollectionViewCell.identifier
+        )
+        collecitonView.register(
+            RatingCollectionViewCell.self,
+            forCellWithReuseIdentifier: RatingCollectionViewCell.identifier
+        )
+        collecitonView.register(
+            CollectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: CollectionHeaderView.identifier
+        )
+        collecitonView.delegate = self
+        collecitonView.dataSource = self
+        collecitonView.contentInsetAdjustmentBehavior = .never
+        collecitonView.backgroundColor = .clear
+        return collecitonView
+    }()
+    
     // MARK: - Lifecycle -
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupViews()
+        setupNavigationBar()
+        presenter.loadMovieDetails()
+        presenter.loadCast()
+        
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
+    }
+    
 }
 
 // MARK: - Extensions -
 
+private extension MovieDetailsViewController {
+    func setupViews() {
+        view.backgroundColor = .appBackground
+        
+        view.addSubview(collecitonView)
+        collecitonView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+    func setupNavigationBar(offset yOffset: CGFloat = 0.0) {
+        var offset = yOffset
+        offset = offset > 1 ? 1 : offset
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .appBackground.withAlphaComponent(offset - 0.05)
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.appTextColor.withAlphaComponent(offset)]
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    func createCollectionLayout(_ sectionIndex: Int) -> NSCollectionLayoutSection {
+        let section = presenter.sections[sectionIndex]
+        switch section {
+        case .posterInfo:
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(1)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(view.bounds.height * 0.65)
+            )
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            let section = NSCollectionLayoutSection(group: group)
+            return section
+        case .rating:
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .estimated(10)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: itemSize, subitems: [item])
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
+            return section
+        case .overview:
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .estimated(44)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: itemSize, subitems: [item])
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
+            return section
+        case .cast:
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(0.2),
+                heightDimension: .estimated(10)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: itemSize, subitem: item, count: 1)
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .continuous
+            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
+            
+            let headerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(44)
+            )
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top
+            )
+            section.boundarySupplementaryItems = [sectionHeader]
+            return section
+        }
+    }
+}
+
 extension MovieDetailsViewController: MovieDetailsViewInterface {
+    func reloadMovieDetails() {
+        title = presenter.movieDetails?.title
+        collecitonView.reloadSections([0, 1, 2])
+    }
+    
+    func reloadCast() {
+        collecitonView.reloadSections([3])
+    }
+}
+
+// MARK: - UICollectionView Delegate/DS -
+
+extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        presenter.sections.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let sectionType = presenter.sections[section]
+        switch sectionType {
+        case .posterInfo:
+            return 1
+        case .overview:
+            return 1
+        case .rating:
+            return 1
+        case .cast:
+            return presenter.castMembers.count
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let sectionType = presenter.sections[indexPath.section]
+        
+        switch sectionType {
+        case .posterInfo:
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: PosterInfoCollectionViewCell.identifier,
+                for: indexPath
+            ) as! PosterInfoCollectionViewCell
+            if let movieDetails = presenter.movieDetails {
+                cell.configure(
+                    posterURL: Constants.ImagesURL.w500.appendingPathComponent(movieDetails.posterPath ?? ""),
+                    title: movieDetails.title,
+                    releaseYear: movieDetails.releaseDate,
+                    genres: movieDetails.genres.compactMap { $0.name }.joined(separator: ", "),
+                    duration: String(movieDetails.runtime ?? 0.0)
+                )
+            }
+            return cell
+        case .overview:
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: OverviewCollectionViewCell.identifier,
+                for: indexPath
+            ) as! OverviewCollectionViewCell
+            if let movieDetails = presenter.movieDetails {
+                cell.text = movieDetails.overview
+            }
+            return cell
+        case .cast:
+            let castMember = presenter.castMembers[indexPath.row]
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CastMemberCollectionViewCell.identifier,
+                for: indexPath
+            ) as! CastMemberCollectionViewCell
+            cell.configure(
+                imageURL: Constants.ImagesURL.w500.appendingPathComponent(castMember.profilePath ?? ""),
+                name: castMember.name,
+                character: castMember.character
+            )
+            return cell
+        case .rating:
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: RatingCollectionViewCell.identifier,
+                for: indexPath
+            ) as! RatingCollectionViewCell
+            if let movieDetails = presenter.movieDetails {
+                cell.rating = movieDetails.voteAverage
+            }
+            return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerView = collectionView.dequeueReusableSupplementaryView(
+            ofKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: CollectionHeaderView.identifier,
+            for: indexPath) as! CollectionHeaderView
+        let sectionType = presenter.sections[indexPath.section]
+        switch sectionType {
+        case .cast:
+            headerView.text = "Cast"
+        default:
+            break
+        }
+        headerView.label.font = .systemFont(ofSize: 20, weight: .semibold)
+        return headerView
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset.y / (view.bounds.height * 0.65)
+        setupNavigationBar(offset: offset)
+    }
+    
 }

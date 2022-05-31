@@ -1,5 +1,5 @@
 //
-//  DiscoveredHeaderView.swift
+//  CollectionHeaderView.swift
 //  Movve
 //
 //  Created by Victor Rubenko on 31.05.2022.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class DiscoveredHeaderView: UICollectionReusableView {
+class CollectionHeaderView: UICollectionReusableView {
     
-    static let identifier = "DiscoveredHeaderView"
+    static let identifier = "CollectionHeaderView"
     
     var text: String? {
         didSet {
@@ -17,7 +17,7 @@ class DiscoveredHeaderView: UICollectionReusableView {
         }
     }
     
-    private let label: UILabel = {
+    let label: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20, weight: .semibold)
         return label

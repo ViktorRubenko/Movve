@@ -33,6 +33,8 @@
 		E37C2DE028466AFA00C78CC1 /* PosterInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37C2DDF28466AFA00C78CC1 /* PosterInfoCollectionViewCell.swift */; };
 		E37C2DE328466EF400C78CC1 /* OverviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37C2DE228466EF400C78CC1 /* OverviewCollectionViewCell.swift */; };
 		E37C2DE5284671F800C78CC1 /* CastMemberCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37C2DE4284671F800C78CC1 /* CastMemberCollectionViewCell.swift */; };
+		E37C2DE728467C5700C78CC1 /* StarsRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37C2DE628467C5700C78CC1 /* StarsRatingView.swift */; };
+		E37C2DE9284684AD00C78CC1 /* RatingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E37C2DE8284684AD00C78CC1 /* RatingCollectionViewCell.swift */; };
 		E380DAD32844D1E600D7A686 /* TabBarViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E380DAD22844D1E600D7A686 /* TabBarViewType.swift */; };
 		E380DAE72844E34200D7A686 /* FavoritesInterfaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = E380DAE22844E34200D7A686 /* FavoritesInterfaces.swift */; };
 		E380DAE82844E34200D7A686 /* FavoritesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E380DAE32844E34200D7A686 /* FavoritesPresenter.swift */; };
@@ -98,6 +100,8 @@
 		E37C2DDF28466AFA00C78CC1 /* PosterInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		E37C2DE228466EF400C78CC1 /* OverviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		E37C2DE4284671F800C78CC1 /* CastMemberCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastMemberCollectionViewCell.swift; sourceTree = "<group>"; };
+		E37C2DE628467C5700C78CC1 /* StarsRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarsRatingView.swift; sourceTree = "<group>"; };
+		E37C2DE8284684AD00C78CC1 /* RatingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingCollectionViewCell.swift; sourceTree = "<group>"; };
 		E380DAD22844D1E600D7A686 /* TabBarViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewType.swift; sourceTree = "<group>"; };
 		E380DAE22844E34200D7A686 /* FavoritesInterfaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesInterfaces.swift; sourceTree = "<group>"; };
 		E380DAE32844E34200D7A686 /* FavoritesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesPresenter.swift; sourceTree = "<group>"; };
@@ -271,6 +275,7 @@
 				E3AD91E128456D9B000538C8 /* CollectionHeaderView.swift */,
 				E37C2DD42846410300C78CC1 /* PosterInfoView.swift */,
 				E37C2DD7284647A100C78CC1 /* GradientView.swift */,
+				E37C2DE628467C5700C78CC1 /* StarsRatingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -288,6 +293,7 @@
 			children = (
 				E37C2DDF28466AFA00C78CC1 /* PosterInfoCollectionViewCell.swift */,
 				E37C2DE228466EF400C78CC1 /* OverviewCollectionViewCell.swift */,
+				E37C2DE8284684AD00C78CC1 /* RatingCollectionViewCell.swift */,
 				E37C2DE4284671F800C78CC1 /* CastMemberCollectionViewCell.swift */,
 			);
 			path = Cells;
@@ -547,6 +553,7 @@
 				E37C2DDA284649B900C78CC1 /* UIColor+Extension.swift in Sources */,
 				E380DAEB2844E34200D7A686 /* FavoritesWireframe.swift in Sources */,
 				E3D169C72844EC5A0039FA11 /* MovieDetailsWireframe.swift in Sources */,
+				E37C2DE728467C5700C78CC1 /* StarsRatingView.swift in Sources */,
 				E3D169DE2844F1BF0039FA11 /* Movie.swift in Sources */,
 				E3BBD7B7284549D200FB0CD5 /* DiscoveredCollectionViewCell.swift in Sources */,
 				E3BBD7AB2845308700FB0CD5 /* DiscoveredMovie.swift in Sources */,
@@ -563,6 +570,7 @@
 				E3648527284432B800E33155 /* TabBarWireframe.swift in Sources */,
 				E37C2DE328466EF400C78CC1 /* OverviewCollectionViewCell.swift in Sources */,
 				E3D169FD28450B560039FA11 /* ProductionCountry.swift in Sources */,
+				E37C2DE9284684AD00C78CC1 /* RatingCollectionViewCell.swift in Sources */,
 				E36485302844334A00E33155 /* HomeViewController.swift in Sources */,
 				E3D169C32844EC5A0039FA11 /* MovieDetailsInterfaces.swift in Sources */,
 				E3648524284432B800E33155 /* TabBarInterfaces.swift in Sources */,

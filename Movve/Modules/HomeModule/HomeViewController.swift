@@ -29,9 +29,9 @@ final class HomeViewController: UIViewController {
             forCellWithReuseIdentifier: DiscoveredCollectionViewCell.identifier
         )
         collectionView.register(
-            DiscoveredHeaderView.self,
+            CollectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: DiscoveredHeaderView.identifier
+            withReuseIdentifier: CollectionHeaderView.identifier
         )
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -68,10 +68,10 @@ extension HomeViewController: HomeViewInterface {
 
 extension HomeViewController {
     private func setupViews() {
-        view.backgroundColor = UIColor(red: 23/255, green: 23/255, blue: 33/255, alpha: 1)
+        view.backgroundColor = .appBackground
         
         view.addSubview(collectionView)
-        
+
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -163,8 +163,8 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let headerView = collectionView.dequeueReusableSupplementaryView(
             ofKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: DiscoveredHeaderView.identifier,
-            for: indexPath) as! DiscoveredHeaderView
+            withReuseIdentifier: CollectionHeaderView.identifier,
+            for: indexPath) as! CollectionHeaderView
         let sectionType = presenter.sections[indexPath.section]
         switch sectionType {
         case .movies:

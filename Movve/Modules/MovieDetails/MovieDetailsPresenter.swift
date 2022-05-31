@@ -17,21 +17,69 @@ final class MovieDetailsPresenter {
     private unowned let view: MovieDetailsViewInterface
     private let interactor: MovieDetailsInteractorInterface
     private let wireframe: MovieDetailsWireframeInterface
+    
+    private let movieId: Int
+    private var movie: Movie? {
+        didSet {
+            view.reloadMovieDetails()
+        }
+    }
+    private var cast: [CastMember] = [] {
+        didSet {
+            view.reloadCast()
+        }
+    }
 
     // MARK: - Lifecycle -
 
     init(
         view: MovieDetailsViewInterface,
         interactor: MovieDetailsInteractorInterface,
-        wireframe: MovieDetailsWireframeInterface
+        wireframe: MovieDetailsWireframeInterface,
+        movieId: Int
     ) {
         self.view = view
         self.interactor = interactor
         self.wireframe = wireframe
+        self.movieId = movieId
     }
 }
 
 // MARK: - Extensions -
 
 extension MovieDetailsPresenter: MovieDetailsPresenterInterface {
+    var movieDetails: Movie? {
+        movie
+    }
+    
+    var castMembers: [CastMember] {
+        cast
+    }
+    
+    var sections: [MovieDetailsSectionType] {
+        [.posterInfo, .rating, .overview, .cast]
+    }
+    
+    func loadMovieDetails() {
+        interactor.getMovieDetails(id: movieId) { result in
+            switch result {
+            case .success(let movie):
+                self.movie = movie
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func loadCast() {
+        interactor.getCast(id: movieId) { result in
+            switch result {
+            case .success(let cast):
+                self.cast = cast.cast
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
 }

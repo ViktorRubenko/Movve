@@ -16,12 +16,12 @@ final class MovieDetailsWireframe: BaseWireframe<MovieDetailsViewController> {
 
     // MARK: - Module setup -
 
-    init() {
+    init(movieId: Int) {
         let moduleViewController = MovieDetailsViewController()
         super.init(viewController: moduleViewController)
 
         let interactor = MovieDetailsInteractor()
-        let presenter = MovieDetailsPresenter(view: moduleViewController, interactor: interactor, wireframe: self)
+        let presenter = MovieDetailsPresenter(view: moduleViewController, interactor: interactor, wireframe: self, movieId: movieId)
         moduleViewController.presenter = presenter
     }
 
