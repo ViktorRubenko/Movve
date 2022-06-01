@@ -11,6 +11,7 @@ import Alamofire
 protocol MovieDBServiceProcotol {
     func discoverMovies(completion: @escaping (Result<[DiscoveredMovie], Error>) -> Void)
     func getMovieDetails(id: Int, completion: @escaping (Result<Movie, Error>) -> Void)
+    func getMovieVideos(id: Int, completion: @escaping (Result<[Video], Error>) -> Void)
     
     func discoverTVShows(completion: @escaping (Result<[DiscoveredTVShow], Error>) -> Void)
     func getTVShowDetails(id: Int, completion: @escaping (Result<TVShow, Error>) -> Void)
@@ -118,6 +119,24 @@ extension MovieDBService: MovieDBServiceProcotol {
                 switch dataResponse.result {
                 case .success(let credits):
                     completion(.success(credits))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
+    
+    func getMovieVideos(id: Int, completion: @escaping (Result<[Video], Error>) -> Void) {
+        AF.request(
+            Constants.API.movie.appendingPathComponent("\(id)/videos"),
+            method: .get,
+            parameters: ["api_key": apiKey],
+            encoder: .urlEncodedForm
+        )
+            .validate()
+            .responseDecodable(of: MovieVideos.self) { dataResponse in
+                switch dataResponse.result {
+                case .success(let videos):
+                    completion(.success(videos.results))
                 case .failure(let error):
                     completion(.failure(error))
                 }

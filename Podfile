@@ -8,5 +8,6 @@ target 'Movve' do
   pod 'Alamofire'
   pod 'Kingfisher'
   pod 'SnapKit'
+  pod 'youtube-ios-player-helper'
 
 end

@@ -24,6 +24,7 @@ final class MovieDetailsPresenter {
     private var _movie: Movie?
     private var _cast: [CastMember] = []
     private var _sections: [MovieDetailsSectionType] = []
+    private var _videos: [Video] = []
 
     // MARK: - Lifecycle -
 
@@ -60,6 +61,10 @@ extension MovieDetailsPresenter: MovieDetailsPresenterInterface {
         _sections
     }
     
+    var videos: [Video] {
+        _videos
+    }
+    
     func loadData() {
         
         let group = DispatchGroup()
@@ -86,6 +91,22 @@ extension MovieDetailsPresenter: MovieDetailsPresenterInterface {
             group.leave()
         }
         
+        group.enter()
+        interactor.getVideos(id: movieId) { result in
+            switch result {
+            case .success(let videos):
+                self._videos = videos.compactMap {
+                    if $0.site.lowercased() == "youtube" && $0.name.lowercased().contains("trailer") {
+                        return $0
+                    }
+                    return nil
+                }
+            case .failure(let error):
+                self.wireframe.showAlertAndBack(with: "Error", message: error.localizedDescription)
+            }
+            group.leave()
+        }
+        
         group.notify(queue: .main) {
             if self._movie != nil {
                 self._sections.append(contentsOf: [.rating, .overview])
@@ -95,6 +116,9 @@ extension MovieDetailsPresenter: MovieDetailsPresenterInterface {
             }
             if self._movie?.homepage != nil && URL(string: self._movie!.homepage!) != nil {
                 self._sections.append(.watchNow)
+            }
+            if !self._videos.isEmpty {
+                self._sections.append(.video)
             }
             self.view.reloadData()
         }

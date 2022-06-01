@@ -22,4 +22,8 @@ enum Constants {
         static let w500 = base.appendingPathComponent("/w500")
         static let w780 = base.appendingPathComponent("/w780")
     }
+    
+    enum YouTube {
+        static let embed = URL(string: "https://youtube.com/embed")!
+    }
 }

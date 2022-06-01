@@ -46,6 +46,10 @@ final class MovieDetailsViewController: UIViewController {
             forCellWithReuseIdentifier: WatchNowCollectionViewCell.identifier
         )
         collecitonView.register(
+            VideoCollectionViewCell.self,
+            forCellWithReuseIdentifier: VideoCollectionViewCell.identifier
+        )
+        collecitonView.register(
             CollectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: CollectionHeaderView.identifier
@@ -70,8 +74,6 @@ final class MovieDetailsViewController: UIViewController {
         setupViews()
         setupNavigationBar()
         presenter.loadData()
-//        presenter.loadMovieDetails()
-//        presenter.loadCast()
         
     }
     
@@ -187,6 +189,35 @@ private extension MovieDetailsViewController {
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20)
             return section
+        case .video:
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(1)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(0.33)
+            )
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 40)
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .paging
+            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20, bottom: 10, trailing: -20)
+            
+            let headerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(44)
+            )
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top
+            )
+            section.boundarySupplementaryItems = [sectionHeader]
+            
+            return section
         }
     }
 }
@@ -227,6 +258,8 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
             return presenter.cast.count
         case .watchNow:
             return 1
+        case .video:
+            return presenter.videos.count
         }
     }
     
@@ -278,6 +311,15 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
                 self?.presenter.selectWatchNow()
             }
             return cell
+        case .video:
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: VideoCollectionViewCell.identifier,
+                for: indexPath
+            ) as! VideoCollectionViewCell
+            let video = presenter.videos[indexPath.row]
+            cell.videoID = video.key
+            cell.name = video.name
+            return cell
         }
     }
     
@@ -290,6 +332,8 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
         switch sectionType {
         case .cast:
             headerView.text = "Cast"
+        case .video:
+            headerView.text = "Trailers"
         default:
             break
         }

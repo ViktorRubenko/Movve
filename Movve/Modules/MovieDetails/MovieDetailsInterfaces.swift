@@ -11,7 +11,7 @@
 import UIKit
 
 enum MovieDetailsSectionType {
-    case posterInfo, overview, cast, rating, watchNow
+    case posterInfo, overview, cast, rating, watchNow, video
 }
 
 protocol MovieDetailsWireframeInterface: WireframeInterface {
@@ -26,6 +26,7 @@ protocol MovieDetailsPresenterInterface: PresenterInterface {
     var movie: MovieDetailsModel? { get }
     var cast: [CastMemberModel] { get }
     var sections: [MovieDetailsSectionType] { get }
+    var videos: [Video] { get }
     
     func loadData()
     func selectWatchNow()
@@ -34,4 +35,5 @@ protocol MovieDetailsPresenterInterface: PresenterInterface {
 protocol MovieDetailsInteractorInterface: InteractorInterface {
     func getMovieDetails(id movieId: Int, completion: @escaping (Result<Movie, Error>) -> Void)
     func getCast(id movieId: Int, completion: @escaping (Result<Credits, Error>) -> Void)
+    func getVideos(id movieId: Int, completion: @escaping (Result<[Video], Error>) -> Void)
 }

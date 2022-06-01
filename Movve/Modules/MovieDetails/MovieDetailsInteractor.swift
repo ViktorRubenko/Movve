@@ -9,6 +9,7 @@
 //
 
 import Foundation
+import CloudKit
 
 final class MovieDetailsInteractor {
     private let movieDBService: MovieDBService
@@ -28,6 +29,10 @@ extension MovieDetailsInteractor: MovieDetailsInteractorInterface {
     
     func getCast(id movieId: Int, completion: @escaping (Result<Credits, Error>) -> Void) {
         movieDBService.getCredits(id: movieId, completion: completion)
+    }
+    
+    func getVideos(id movieId: Int, completion: @escaping (Result<[Video], Error>) -> Void) {
+        movieDBService.getMovieVideos(id: movieId, completion: completion)
     }
     
 }
