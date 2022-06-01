@@ -40,6 +40,6 @@ protocol HomePresenterInterface: PresenterInterface {
 }
 
 protocol HomeInteractorInterface: InteractorInterface {
-    func getMovies(completion: @escaping(Result<[DiscoveredMovie], Error>) -> Void)
-    func getTVShows(completion: @escaping(Result<[DiscoveredTVShow], Error>) -> Void)
+    func getMovies(completion: @escaping(Result<[Movie], Error>) -> Void)
+    func getTVShows(completion: @escaping(Result<[TVShow], Error>) -> Void)
 }

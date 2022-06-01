@@ -349,7 +349,7 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
             posterInfoView.snp.makeConstraints { make in
                 posterHeight = make.height.equalTo(offset <= 0 ? offset * -1 : 0).constraint
             }
-        setupNavigationBar(offset: offset)
+            setupNavigationBar(offset: offset)
     }
     
 }

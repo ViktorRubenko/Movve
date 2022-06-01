@@ -23,7 +23,7 @@ final class MovieDetailsInteractor {
 
 extension MovieDetailsInteractor: MovieDetailsInteractorInterface {
     
-    func getMovieDetails(id movieId: Int, completion: @escaping (Result<Movie, Error>) -> Void)  {
+    func getMovieDetails(id movieId: Int, completion: @escaping (Result<MovieDetails, Error>) -> Void)  {
         movieDBService.getMovieDetails(id: movieId, completion: completion)
     }
     
@@ -31,7 +31,7 @@ extension MovieDetailsInteractor: MovieDetailsInteractorInterface {
         movieDBService.getCredits(id: movieId, completion: completion)
     }
     
-    func getVideos(id movieId: Int, completion: @escaping (Result<[Video], Error>) -> Void) {
+    func getMovieVideos(id movieId: Int, completion: @escaping (Result<[Video], Error>) -> Void) {
         movieDBService.getMovieVideos(id: movieId, completion: completion)
     }
     

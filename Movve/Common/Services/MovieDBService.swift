@@ -9,12 +9,12 @@ import Foundation
 import Alamofire
 
 protocol MovieDBServiceProcotol {
-    func discoverMovies(completion: @escaping (Result<[DiscoveredMovie], Error>) -> Void)
-    func getMovieDetails(id: Int, completion: @escaping (Result<Movie, Error>) -> Void)
+    func discoverMovies(completion: @escaping (Result<[Movie], Error>) -> Void)
+    func getMovieDetails(id: Int, completion: @escaping (Result<MovieDetails, Error>) -> Void)
     func getMovieVideos(id: Int, completion: @escaping (Result<[Video], Error>) -> Void)
     
-    func discoverTVShows(completion: @escaping (Result<[DiscoveredTVShow], Error>) -> Void)
-    func getTVShowDetails(id: Int, completion: @escaping (Result<TVShow, Error>) -> Void)
+    func discoverTVShows(completion: @escaping (Result<[TVShow], Error>) -> Void)
+    func getTVShowDetails(id: Int, completion: @escaping (Result<TVShowDetails, Error>) -> Void)
     
     func getCredits(id: Int, completion: @escaping (Result<Credits, Error>) -> Void)
 }
@@ -35,7 +35,7 @@ final class MovieDBService {
 }
 
 extension MovieDBService: MovieDBServiceProcotol {
-    func discoverTVShows(completion: @escaping (Result<[DiscoveredTVShow], Error>) -> Void) {
+    func discoverTVShows(completion: @escaping (Result<[TVShow], Error>) -> Void) {
         AF.request(
             Constants.API.discoverTVShows,
             method: .get,
@@ -53,7 +53,7 @@ extension MovieDBService: MovieDBServiceProcotol {
             }
     }
     
-    func getTVShowDetails(id: Int, completion: @escaping (Result<TVShow, Error>) -> Void) {
+    func getTVShowDetails(id: Int, completion: @escaping (Result<TVShowDetails, Error>) -> Void) {
         AF.request(
             Constants.API.tvshow.appendingPathComponent(String(id)),
             method: .get,
@@ -61,7 +61,7 @@ extension MovieDBService: MovieDBServiceProcotol {
             encoder: .urlEncodedForm
         )
             .validate()
-            .responseDecodable(of: TVShow.self) { dataResponse in
+            .responseDecodable(of: TVShowDetails.self) { dataResponse in
                 switch dataResponse.result {
                 case .success(let tvShow):
                     completion(.success(tvShow))
@@ -71,7 +71,7 @@ extension MovieDBService: MovieDBServiceProcotol {
             }
     }
     
-    func discoverMovies(completion: @escaping (Result<[DiscoveredMovie], Error>) -> Void) {
+    func discoverMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
         AF.request(
             Constants.API.discoverMovies,
             method: .get,
@@ -79,7 +79,7 @@ extension MovieDBService: MovieDBServiceProcotol {
             encoder: .urlEncodedForm
         )
             .validate()
-            .responseDecodable(of: DiscoverMovies.self) { dataResponse in
+            .responseDecodable(of: MoviesResponse.self) { dataResponse in
                 switch dataResponse.result {
                 case .success(let movies):
                     completion(.success(movies.results))
@@ -89,7 +89,7 @@ extension MovieDBService: MovieDBServiceProcotol {
             }
     }
     
-    func getMovieDetails(id: Int, completion: @escaping (Result<Movie, Error>) -> Void) {
+    func getMovieDetails(id: Int, completion: @escaping (Result<MovieDetails, Error>) -> Void) {
         AF.request(
             Constants.API.movie.appendingPathComponent(String(id)),
             method: .get,
@@ -97,7 +97,7 @@ extension MovieDBService: MovieDBServiceProcotol {
             encoder: .urlEncodedForm
         )
             .validate()
-            .responseDecodable(of: Movie.self) { dataResponse in
+            .responseDecodable(of: MovieDetails.self) { dataResponse in
                 switch dataResponse.result {
                 case .success(let movie):
                     completion(.success(movie))

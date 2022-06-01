@@ -9,7 +9,7 @@ import Foundation
 
 struct DiscoverTVShows: Codable {
     let page: Int
-    let results: [DiscoveredTVShow]
+    let results: [TVShow]
     let totalPages: Int
 
     enum CodingKeys: String, CodingKey {

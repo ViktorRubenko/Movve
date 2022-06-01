@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct DiscoverMovies: Codable {
+struct MoviesResponse: Codable {
     let page: Int
-    let results: [DiscoveredMovie]
+    let results: [Movie]
     let totalPages: Int
     
     enum CodingKeys: String, CodingKey {

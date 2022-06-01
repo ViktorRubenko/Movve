@@ -20,13 +20,13 @@ final class HomePresenter {
     
     private let mapper: MovieDBMapperInterface
     
-    private var movies: [DiscoveredMovie] = [] {
+    private var movies: [Movie] = [] {
         didSet {
             view.reloadMovies()
         }
     }
     
-    private var tvShows: [DiscoveredTVShow] = [] {
+    private var tvShows: [TVShow] = [] {
         didSet {
             view.reloadTVShows()
         }

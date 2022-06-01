@@ -9,9 +9,9 @@ import Foundation
 
 
 protocol MovieDBMapperInterface {
-    func discoveredMovieToDiscoveredModel(_ movie: DiscoveredMovie) -> DiscoveredModel
-    func discoveredTVShowToDiscoveredModel(_ tvShow: DiscoveredTVShow) -> DiscoveredModel
-    func movieToMovieDetailsModel(_ movie: Movie) -> MovieDetailsModel
+    func discoveredMovieToDiscoveredModel(_ movie: Movie) -> DiscoveredModel
+    func discoveredTVShowToDiscoveredModel(_ tvShow: TVShow) -> DiscoveredModel
+    func movieToMovieDetailsModel(_ movie: MovieDetails) -> MovieDetailsModel
     func castMemberToCastMemberModel(_ castMember: CastMember) -> CastMemberModel
 }
 
@@ -45,7 +45,7 @@ final class Mapper {
 
 extension Mapper: MovieDBMapperInterface {
 
-    func discoveredMovieToDiscoveredModel(_ movie: DiscoveredMovie) -> DiscoveredModel {
+    func discoveredMovieToDiscoveredModel(_ movie: Movie) -> DiscoveredModel {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d, yyyy"
         let releaseDate: String
@@ -61,7 +61,7 @@ extension Mapper: MovieDBMapperInterface {
         )
     }
     
-    func discoveredTVShowToDiscoveredModel(_ tvShow: DiscoveredTVShow) -> DiscoveredModel {
+    func discoveredTVShowToDiscoveredModel(_ tvShow: TVShow) -> DiscoveredModel {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d, yyyy"
         let releaseDate: String
@@ -77,7 +77,7 @@ extension Mapper: MovieDBMapperInterface {
         )
     }
     
-    func movieToMovieDetailsModel(_ movie: Movie) -> MovieDetailsModel {
+    func movieToMovieDetailsModel(_ movie: MovieDetails) -> MovieDetailsModel {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy"

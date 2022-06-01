@@ -21,7 +21,7 @@ final class MovieDetailsPresenter {
     private let mapper: MovieDBMapperInterface
     
     private let movieId: Int
-    private var _movie: Movie?
+    private var _movie: MovieDetails?
     private var _cast: [CastMember] = []
     private var _sections: [MovieDetailsSectionType] = []
     private var _videos: [Video] = []
@@ -92,7 +92,7 @@ extension MovieDetailsPresenter: MovieDetailsPresenterInterface {
         }
         
         group.enter()
-        interactor.getVideos(id: movieId) { result in
+        interactor.getMovieVideos(id: movieId) { result in
             switch result {
             case .success(let videos):
                 self._videos = videos.compactMap {

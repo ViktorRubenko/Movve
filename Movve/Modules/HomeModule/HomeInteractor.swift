@@ -21,11 +21,11 @@ final class HomeInteractor {
 // MARK: - Extensions -
 
 extension HomeInteractor: HomeInteractorInterface {
-    func getMovies(completion: @escaping (Result<[DiscoveredMovie], Error>) -> Void) {
+    func getMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
         movieDBService.discoverMovies(completion: completion)
     }
     
-    func getTVShows(completion: @escaping (Result<[DiscoveredTVShow], Error>) -> Void) {
+    func getTVShows(completion: @escaping (Result<[TVShow], Error>) -> Void) {
         movieDBService.discoverTVShows(completion: completion)
     }
 }

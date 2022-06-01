@@ -41,6 +41,8 @@ class VideoCollectionViewCell: UICollectionViewCell {
         let player = YTPlayerView()
         player.isOpaque = false
         player.backgroundColor = .clear
+        player.layer.cornerRadius = 10
+        player.clipsToBounds = true
         return player
     }()
     

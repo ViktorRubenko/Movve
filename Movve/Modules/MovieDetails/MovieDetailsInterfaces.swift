@@ -33,7 +33,7 @@ protocol MovieDetailsPresenterInterface: PresenterInterface {
 }
 
 protocol MovieDetailsInteractorInterface: InteractorInterface {
-    func getMovieDetails(id movieId: Int, completion: @escaping (Result<Movie, Error>) -> Void)
+    func getMovieDetails(id movieId: Int, completion: @escaping (Result<MovieDetails, Error>) -> Void)
     func getCast(id movieId: Int, completion: @escaping (Result<Credits, Error>) -> Void)
-    func getVideos(id movieId: Int, completion: @escaping (Result<[Video], Error>) -> Void)
+    func getMovieVideos(id movieId: Int, completion: @escaping (Result<[Video], Error>) -> Void)
 }
