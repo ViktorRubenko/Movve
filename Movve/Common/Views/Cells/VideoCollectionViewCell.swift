@@ -41,7 +41,6 @@ class VideoCollectionViewCell: UICollectionViewCell {
         let player = YTPlayerView()
         player.isOpaque = false
         player.backgroundColor = .clear
-        player.delegate = self
         return player
     }()
     
@@ -72,11 +71,5 @@ extension VideoCollectionViewCell {
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
         }
-    }
-}
-
-extension VideoCollectionViewCell: YTPlayerViewDelegate {
-    func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
-        print("ready")
     }
 }

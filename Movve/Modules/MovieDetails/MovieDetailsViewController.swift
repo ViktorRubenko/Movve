@@ -65,6 +65,7 @@ final class MovieDetailsViewController: UIViewController {
     
     private let posterInfoView = PosterInfoView(frame: .zero, bottomGradientColor: .appBackground)
     private var posterHeight: Constraint!
+    private var navBarModifyAllowed = false
     
     // MARK: - Lifecycle -
     
@@ -110,8 +111,8 @@ private extension MovieDetailsViewController {
         collecitonView.contentInset.top = posterHeight.layoutConstraints.first!.constant
     }
     
-    func setupNavigationBar(offset yOffset: CGFloat = 0.0) {
-        var offset = (yOffset - (view.bounds.height * 0.65) + 200) / 44
+    func setupNavigationBar(offset yOffset: CGFloat = -1000) {
+        var offset = (yOffset + 200) / 50
         offset = offset > 1 ? 1 : offset
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
@@ -228,6 +229,7 @@ extension MovieDetailsViewController: MovieDetailsViewInterface {
         guard let movie = presenter.movie else {
             return
         }
+        title = movie.title
         posterInfoView.configure(
             posterURL: movie.posterURL,
             title: movie.title,
@@ -345,7 +347,7 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
         let offset = scrollView.contentOffset.y
             posterHeight.deactivate()
             posterInfoView.snp.makeConstraints { make in
-                posterHeight = make.height.equalTo(offset * -1).constraint
+                posterHeight = make.height.equalTo(offset <= 0 ? offset * -1 : 0).constraint
             }
         setupNavigationBar(offset: offset)
     }
