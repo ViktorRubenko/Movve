@@ -19,17 +19,15 @@ protocol MovieDetailsWireframeInterface: WireframeInterface {
 }
 
 protocol MovieDetailsViewInterface: ViewInterface {
-    func reloadMovieDetails()
-    func reloadCast()
+    func reloadData()
 }
 
 protocol MovieDetailsPresenterInterface: PresenterInterface {
-    var movieDetails: MovieDetailsModel? { get }
-    var castMembers: [CastMemberModel] { get }
+    var movie: MovieDetailsModel? { get }
+    var cast: [CastMemberModel] { get }
     var sections: [MovieDetailsSectionType] { get }
     
-    func loadMovieDetails()
-    func loadCast()
+    func loadData()
     func selectWatchNow()
 }
 

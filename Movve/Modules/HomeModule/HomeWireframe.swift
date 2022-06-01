@@ -31,6 +31,8 @@ final class HomeWireframe: BaseWireframe<HomeViewController> {
 
 extension HomeWireframe: HomeWireframeInterface {
     func navigateToMovieDetails(id: Int) {
+        
+        navigationController?.topViewController?.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationController?.pushWireframe(MovieDetailsWireframe(movieId: id))
     }
     

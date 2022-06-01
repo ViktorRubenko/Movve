@@ -66,8 +66,7 @@ extension HomePresenter: HomePresenterInterface {
         interactor.getMovies { [unowned self] result in
             switch result {
             case .failure(let error):
-                print(error)
-                // IMPLEMENT SHOW ALERT
+                wireframe.showAlert(with: "Error", message: error.localizedDescription)
             case .success(let movies):
                 self.movies = movies
             }
@@ -86,7 +85,7 @@ extension HomePresenter: HomePresenterInterface {
         interactor.getTVShows { [unowned self] result in
             switch result {
             case .failure(let error):
-                print(error)
+                wireframe.showAlert(with: "Error", message: error.localizedDescription)
             case .success(let tvShows):
                 self.tvShows = tvShows
             }

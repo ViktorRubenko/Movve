@@ -31,6 +31,13 @@ final class MovieDetailsWireframe: BaseWireframe<MovieDetailsViewController> {
 
 extension MovieDetailsWireframe: MovieDetailsWireframeInterface {
     func openURL(url: URL) {
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        let alert = UIAlertController(title: nil, message: "Do you want to open link in external browser?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Yes", style: .default) { _ in
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+        let cancelAction = UIAlertAction(title: "No", style: .default, handler: nil)
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        navigationController?.present(alert, animated: true, completion: nil)
     }
 }

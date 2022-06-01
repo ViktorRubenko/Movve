@@ -14,7 +14,4 @@ extension UIImage {
     static var personPlaceholder: UIImage? {
         UIImage(named: "human_placholder")
     }
-    static var chevronLeftWithShadow: UIImage? {
-        UIImage(named: "prev")
-    }
 }

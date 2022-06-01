@@ -9,6 +9,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class MovieDetailsViewController: UIViewController {
     
@@ -54,9 +55,12 @@ final class MovieDetailsViewController: UIViewController {
         collecitonView.contentInsetAdjustmentBehavior = .never
         collecitonView.backgroundColor = .clear
         collecitonView.showsVerticalScrollIndicator = false
-        collecitonView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
+        collecitonView.contentInset.bottom = 30
         return collecitonView
     }()
+    
+    private let posterInfoView = PosterInfoView(frame: .zero, bottomGradientColor: .appBackground)
+    private var posterHeight: Constraint!
     
     // MARK: - Lifecycle -
     
@@ -65,8 +69,9 @@ final class MovieDetailsViewController: UIViewController {
         
         setupViews()
         setupNavigationBar()
-        presenter.loadMovieDetails()
-        presenter.loadCast()
+        presenter.loadData()
+//        presenter.loadMovieDetails()
+//        presenter.loadCast()
         
     }
     
@@ -92,11 +97,19 @@ private extension MovieDetailsViewController {
         collecitonView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+        
+        collecitonView.addSubview(posterInfoView)
+        posterInfoView.snp.makeConstraints { make in
+            make.top.equalTo(view)
+            make.leading.equalTo(view)
+            make.trailing.equalTo(view)
+            posterHeight = make.height.equalTo(view.bounds.height * 0.65).constraint
+        }
+        collecitonView.contentInset.top = posterHeight.layoutConstraints.first!.constant
     }
     
     func setupNavigationBar(offset yOffset: CGFloat = 0.0) {
         var offset = (yOffset - (view.bounds.height * 0.65) + 200) / 44
-
         offset = offset > 1 ? 1 : offset
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
@@ -179,13 +192,18 @@ private extension MovieDetailsViewController {
 }
 
 extension MovieDetailsViewController: MovieDetailsViewInterface {
-    func reloadMovieDetails() {
-        title = presenter.movieDetails?.title
-        collecitonView.reloadSections([0, 1, 2])
-    }
-    
-    func reloadCast() {
-        collecitonView.reloadSections([3])
+    func reloadData() {
+        collecitonView.reloadData()
+        guard let movie = presenter.movie else {
+            return
+        }
+        posterInfoView.configure(
+            posterURL: movie.posterURL,
+            title: movie.title,
+            releaseYear: movie.releaseYear,
+            genres: movie.genres,
+            duration: movie.duration
+        )
     }
 }
 
@@ -206,7 +224,7 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
         case .rating:
             return 1
         case .cast:
-            return presenter.castMembers.count
+            return presenter.cast.count
         case .watchNow:
             return 1
         }
@@ -221,7 +239,7 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
                 withReuseIdentifier: PosterInfoCollectionViewCell.identifier,
                 for: indexPath
             ) as! PosterInfoCollectionViewCell
-            if let movieDetails = presenter.movieDetails {
+            if let movieDetails = presenter.movie {
                 cell.configure(movieDetails)
             }
             return cell
@@ -230,12 +248,12 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
                 withReuseIdentifier: OverviewCollectionViewCell.identifier,
                 for: indexPath
             ) as! OverviewCollectionViewCell
-            if let movieDetails = presenter.movieDetails {
+            if let movieDetails = presenter.movie {
                 cell.text = movieDetails.overview
             }
             return cell
         case .cast:
-            let castMemberModel = presenter.castMembers[indexPath.row]
+            let castMemberModel = presenter.cast[indexPath.row]
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: CastMemberCollectionViewCell.identifier,
                 for: indexPath
@@ -247,7 +265,7 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
                 withReuseIdentifier: RatingCollectionViewCell.identifier,
                 for: indexPath
             ) as! RatingCollectionViewCell
-            if let movieDetails = presenter.movieDetails {
+            if let movieDetails = presenter.movie {
                 cell.rating = movieDetails.rating
             }
             return cell
@@ -281,6 +299,10 @@ extension MovieDetailsViewController: UICollectionViewDelegate, UICollectionView
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset.y
+            posterHeight.deactivate()
+            posterInfoView.snp.makeConstraints { make in
+                posterHeight = make.height.equalTo(offset * -1).constraint
+            }
         setupNavigationBar(offset: offset)
     }
     

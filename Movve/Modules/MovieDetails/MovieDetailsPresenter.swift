@@ -21,16 +21,9 @@ final class MovieDetailsPresenter {
     private let mapper: MovieDBMapperInterface
     
     private let movieId: Int
-    private var movie: Movie? {
-        didSet {
-            view.reloadMovieDetails()
-        }
-    }
-    private var cast: [CastMember] = [] {
-        didSet {
-            view.reloadCast()
-        }
-    }
+    private var _movie: Movie?
+    private var _cast: [CastMember] = []
+    private var _sections: [MovieDetailsSectionType] = []
 
     // MARK: - Lifecycle -
 
@@ -52,45 +45,63 @@ final class MovieDetailsPresenter {
 // MARK: - Extensions -
 
 extension MovieDetailsPresenter: MovieDetailsPresenterInterface {
-    var movieDetails: MovieDetailsModel? {
-        guard let movie = movie else {
+    var movie: MovieDetailsModel? {
+        guard let movie = _movie else {
             return nil
         }
         return mapper.movieToMovieDetailsModel(movie)
     }
     
-    var castMembers: [CastMemberModel] {
-        cast.compactMap { mapper.castMemberToCastMemberModel($0) }
+    var cast: [CastMemberModel] {
+        _cast.compactMap { mapper.castMemberToCastMemberModel($0) }
     }
     
     var sections: [MovieDetailsSectionType] {
-        [.posterInfo, .rating, .overview, .cast, .watchNow]
+        _sections
     }
     
-    func loadMovieDetails() {
+    func loadData() {
+        
+        let group = DispatchGroup()
+        
+        group.enter()
         interactor.getMovieDetails(id: movieId) { result in
             switch result {
             case .success(let movie):
-                self.movie = movie
+                self._movie = movie
             case .failure(let error):
-                print(error)
+                self.wireframe.showAlertAndBack(with: "Error", message: error.localizedDescription)
             }
+            group.leave()
         }
-    }
-    
-    func loadCast() {
+        
+        group.enter()
         interactor.getCast(id: movieId) { result in
             switch result {
             case .success(let cast):
-                self.cast = cast.cast
+                self._cast = cast.cast
             case .failure(let error):
-                print(error)
+                self.wireframe.showAlertAndBack(with: "Error", message: error.localizedDescription)
             }
+            group.leave()
+        }
+        
+        group.notify(queue: .main) {
+            if self._movie != nil {
+                self._sections.append(contentsOf: [.rating, .overview])
+            }
+            if !self._cast.isEmpty {
+                self._sections.append(.cast)
+            }
+            if self._movie?.homepage != nil && URL(string: self._movie!.homepage!) != nil {
+                self._sections.append(.watchNow)
+            }
+            self.view.reloadData()
         }
     }
     
     func selectWatchNow() {
-        guard let homepage = movie?.homepage, let url = URL(string: homepage) else {
+        guard let homepage = _movie?.homepage, let url = URL(string: homepage) else {
             return
         }
         wireframe.openURL(url: url)

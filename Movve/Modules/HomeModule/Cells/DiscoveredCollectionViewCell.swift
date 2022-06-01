@@ -99,11 +99,16 @@ extension DiscoveredCollectionViewCell {
             return
         }
         
+        imageView.kf.indicatorType = .activity
         imageView.kf.setImage(
             with: imageURL,
-            placeholder: UIImage(systemName: "film"),
-            options: nil,
-            completionHandler: nil
-        )
+            options: nil) { result in
+                switch result {
+                case .success(_):
+                    break
+                case .failure(_):
+                    self.imageView.image = .posterPlaceholder
+                }
+            }
     }
 }

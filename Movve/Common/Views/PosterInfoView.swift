@@ -67,10 +67,6 @@ extension PosterInfoView {
             make.edges.equalToSuperview()
         }
         
-        gradientView.snp.makeConstraints { make in
-            make.edges.equalTo(posterImageView)
-        }
-        
         infoLabel.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
             make.leading.equalToSuperview().offset(10)
@@ -81,6 +77,13 @@ extension PosterInfoView {
             make.bottom.equalTo(infoLabel.snp.top).offset(-10)
             make.trailing.equalToSuperview().offset(-10)
             make.leading.equalToSuperview().offset(10)
+        }
+        
+        gradientView.snp.makeConstraints { make in
+            make.bottom.equalTo(infoLabel)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(250)
         }
     }
     
@@ -98,10 +101,16 @@ extension PosterInfoView {
         guard let posterURL = posterURL else {
             return
         }
+        posterImageView.kf.indicatorType = .activity
         posterImageView.kf.setImage(
             with: posterURL,
-            placeholder: UIImage(systemName: "film"),
-            options: nil,
-            completionHandler: nil)
+            options: nil) { result in
+                switch result {
+                case .success(_):
+                    break
+                case .failure(_):
+                    self.posterImageView.image = .posterPlaceholder
+                }
+            }
     }
 }

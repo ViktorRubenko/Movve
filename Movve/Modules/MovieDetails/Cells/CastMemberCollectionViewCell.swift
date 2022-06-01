@@ -87,14 +87,19 @@ extension CastMemberCollectionViewCell {
         nameLabel.text = model.name
         characterLabel.text = model.character
         guard let imageURL = model.imageURL else {
-            imageView.image = UIImage(named: "human_placholder")
+            imageView.image = .personPlaceholder
             return
         }
+        imageView.kf.indicatorType = .activity
         imageView.kf.setImage(
             with: imageURL,
-            placeholder: UIImage(named: "human_placholder"),
-            options: nil,
-            completionHandler: nil
-        )
+            options: nil) { result in
+                switch result {
+                case .success(_):
+                    break
+                case .failure(_):
+                    self.imageView.image = .personPlaceholder
+                }
+            }
     }
 }

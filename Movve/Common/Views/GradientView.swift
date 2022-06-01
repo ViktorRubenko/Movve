@@ -39,7 +39,7 @@ class GradientView: UIView {
     
     override func draw(_ rect: CGRect) {
         gradient.frame = self.bounds
-        gradient.colors = [gradientStartColor.cgColor, gradientEndColor.cgColor, gradientEndColor.cgColor]
+        gradient.colors = [gradientStartColor.cgColor, gradientEndColor.cgColor]
         gradient.startPoint = gradientStartPoint
         gradient.endPoint = gradientEndPoint
         

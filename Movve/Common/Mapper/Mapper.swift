@@ -95,7 +95,7 @@ extension Mapper: MovieDBMapperInterface {
             genres = movie.genres.first?.name ?? ""
         }
         return MovieDetailsModel(
-            posterURL: movie.posterPath != nil ? Constants.ImagesURL.w500.appendingPathComponent(movie.posterPath!) : nil,
+            posterURL: movie.posterPath != nil ? Constants.ImagesURL.w780.appendingPathComponent(movie.posterPath!) : nil,
             title: movie.title,
             releaseYear: releaseYear,
             genres: genres,
