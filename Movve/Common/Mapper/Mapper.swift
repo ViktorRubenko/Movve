@@ -13,6 +13,7 @@ protocol MovieDBMapperInterface {
     func discoveredTVShowToDiscoveredModel(_ tvShow: TVShow) -> DiscoveredModel
     func movieToMovieDetailsModel(_ movie: MovieDetails) -> MovieDetailsModel
     func castMemberToCastMemberModel(_ castMember: CastMember) -> CastMemberModel
+    func tvShowToTVShowDetailsModel(_ tvShow: TVShowDetails) -> TVShowDetailsModel
 }
 
 final class Mapper {
@@ -111,6 +112,36 @@ extension Mapper: MovieDBMapperInterface {
             name: castMember.name,
             character: castMember.character,
             imageURL: castMember.profilePath != nil ? Constants.ImagesURL.w500.appendingPathComponent(castMember.profilePath!) : nil
+        )
+    }
+    
+    func tvShowToTVShowDetailsModel(_ tvShow: TVShowDetails) -> TVShowDetailsModel {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy"
+        let releaseYear: String
+        if let date = movieDBDateToDate(tvShow.firstAirDate) {
+            releaseYear = dateFormatter.string(from: date)
+        } else {
+            releaseYear = ""
+        }
+        
+        let genres: String
+        if tvShow.genres.count > 1 {
+            genres = tvShow.genres[0..<2].compactMap({ $0.name }).joined(separator: ", ")
+        } else {
+            genres = tvShow.genres.first?.name ?? ""
+        }
+        
+        return TVShowDetailsModel(
+            posterURL: tvShow.posterPath != nil ? Constants.ImagesURL.w780.appendingPathComponent(tvShow.posterPath!) : nil,
+            title: tvShow.name,
+            releaseYear: releaseYear,
+            genres: genres,
+            duration: "\(tvShow.numberOfSeasons) season\(tvShow.numberOfSeasons > 1 ? "s" : "")",
+            rating: tvShow.voteAverage,
+            overview: tvShow.overview,
+            homepage: URL(string: tvShow.homepage ?? "")
         )
     }
 }

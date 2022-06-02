@@ -12,11 +12,12 @@ protocol MovieDBServiceProcotol {
     func discoverMovies(completion: @escaping (Result<[Movie], Error>) -> Void)
     func getMovieDetails(id: Int, completion: @escaping (Result<MovieDetails, Error>) -> Void)
     func getMovieVideos(id: Int, completion: @escaping (Result<[Video], Error>) -> Void)
+    func getMovieCredits(id: Int, completion: @escaping (Result<Credits, Error>) -> Void)
     
     func discoverTVShows(completion: @escaping (Result<[TVShow], Error>) -> Void)
     func getTVShowDetails(id: Int, completion: @escaping (Result<TVShowDetails, Error>) -> Void)
-    
-    func getCredits(id: Int, completion: @escaping (Result<Credits, Error>) -> Void)
+    func getTVShowVideos(id: Int, completion: @escaping (Result<[Video], Error>) -> Void)
+    func getTVShowCredits(id: Int, completion: @escaping (Result<Credits, Error>) -> Void)
 }
 
 final class MovieDBService {
@@ -107,7 +108,7 @@ extension MovieDBService: MovieDBServiceProcotol {
             }
     }
     
-    func getCredits(id: Int, completion: @escaping (Result<Credits, Error>) -> Void) {
+    func getMovieCredits(id: Int, completion: @escaping (Result<Credits, Error>) -> Void) {
         AF.request(
             Constants.API.movie.appendingPathComponent("\(id)/credits"),
             method: .get,
@@ -133,7 +134,43 @@ extension MovieDBService: MovieDBServiceProcotol {
             encoder: .urlEncodedForm
         )
             .validate()
-            .responseDecodable(of: MovieVideos.self) { dataResponse in
+            .responseDecodable(of: VideosResponse.self) { dataResponse in
+                switch dataResponse.result {
+                case .success(let videos):
+                    completion(.success(videos.results))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
+    
+    func getTVShowCredits(id: Int, completion: @escaping (Result<Credits, Error>) -> Void) {
+        AF.request(
+            Constants.API.tvshow.appendingPathComponent("\(id)/credits"),
+            method: .get,
+            parameters: ["api_key": apiKey],
+            encoder: .urlEncodedForm
+        )
+            .validate()
+            .responseDecodable(of: Credits.self) { dataResponse in
+                switch dataResponse.result {
+                case .success(let credits):
+                    completion(.success(credits))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
+    
+    func getTVShowVideos(id: Int, completion: @escaping (Result<[Video], Error>) -> Void) {
+        AF.request(
+            Constants.API.tvshow.appendingPathComponent("\(id)/videos"),
+            method: .get,
+            parameters: ["api_key": apiKey],
+            encoder: .urlEncodedForm
+        )
+            .validate()
+            .responseDecodable(of: VideosResponse.self) { dataResponse in
                 switch dataResponse.result {
                 case .success(let videos):
                     completion(.success(videos.results))

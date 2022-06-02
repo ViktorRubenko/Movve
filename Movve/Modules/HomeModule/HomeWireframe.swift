@@ -37,7 +37,8 @@ extension HomeWireframe: HomeWireframeInterface {
     }
     
     func navigateToTVDetails(id: Int) {
-        print("nav to tv")
+        navigationController?.topViewController?.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationController?.pushWireframe(TVShowDetailsWireframe(tvShowId: id))
     }
     
 }

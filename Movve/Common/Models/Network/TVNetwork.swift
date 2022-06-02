@@ -10,7 +10,8 @@ import Foundation
 struct TVNetwork: Codable {
     let name: String
     let id: Int
-    let logoPath, originCountry: String
+    let logoPath: String?
+    let originCountry: String
 
     enum CodingKeys: String, CodingKey {
         case name, id

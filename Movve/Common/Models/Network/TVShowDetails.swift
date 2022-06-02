@@ -12,7 +12,7 @@ struct TVShowDetails: Codable {
     let episodeRunTime: [Int]
     let firstAirDate: String
     let genres: [Genre]
-    let homepage: String
+    let homepage: String?
     let id: Int
     let inProduction: Bool
     let languages: [String]
