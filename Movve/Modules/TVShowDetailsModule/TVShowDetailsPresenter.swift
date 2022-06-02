@@ -25,6 +25,11 @@ final class TVShowDetailsPresenter {
     private var _cast: [CastMember] = []
     private var _sections: [TVShowDetailsSectionType] = []
     private var _videos: [Video] = []
+    private var _isInFavorites: Bool = false {
+        didSet {
+            view.updateFavorites()
+        }
+    }
 
     // MARK: - Lifecycle -
 
@@ -66,7 +71,13 @@ extension TVShowDetailsPresenter: TVShowDetailsPresenterInterface {
         _videos
     }
     
+    var isInFavorite: Bool {
+        _isInFavorites
+    }
+    
     func loadData() {
+        
+        _isInFavorites = interactor.isInFavorite(tvShowId: tvShowId)
         
         let group = DispatchGroup()
         
@@ -130,6 +141,20 @@ extension TVShowDetailsPresenter: TVShowDetailsPresenterInterface {
             return
         }
         wireframe.openURL(url: url)
+    }
+    
+    
+    func tapFavorite() {
+        if _isInFavorites {
+            interactor.removeFromFavorites(tvShowId: tvShowId)
+        } else {
+            guard let tvShow = _tvShow else {
+                return
+            }
+
+            interactor.addToFavorites(tvShow: tvShow)
+        }
+        _isInFavorites.toggle()
     }
 }
 

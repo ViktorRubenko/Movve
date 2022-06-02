@@ -11,10 +11,15 @@
 import Foundation
 
 final class TVShowDetailsInteractor {
-    private let movieDBService: MovieDBService
+    private let movieDBService: MovieDBServiceProcotol
+    private let dataService: DataServiceProtocol
     
-    init(movieDBService: MovieDBService = .shared) {
+    init(
+        movieDBService: MovieDBServiceProcotol = MovieDBService.shared,
+        dataService: DataServiceProtocol = RealmDataService.shared
+    ) {
         self.movieDBService = movieDBService
+        self.dataService = dataService
     }
 }
 
@@ -32,6 +37,18 @@ extension TVShowDetailsInteractor: TVShowDetailsInteractorInterface {
     
     func getTVShowVideos(id tvShowId: Int, completion: @escaping (Result<[Video], Error>) -> Void) {
         movieDBService.getTVShowVideos(id: tvShowId, completion: completion)
+    }
+    
+    func addToFavorites(tvShow: TVShowDetails) {
+        dataService.addToFavorite(tvShow: tvShow)
+    }
+    
+    func removeFromFavorites(tvShowId: Int) {
+        dataService.removeFromFavorites(tvShowId: tvShowId)
+    }
+    
+    func isInFavorite(tvShowId: Int) -> Bool {
+        dataService.isTVShowInFavorites(tvShowId: tvShowId)
     }
     
 }

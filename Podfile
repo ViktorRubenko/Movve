@@ -9,5 +9,6 @@ target 'Movve' do
   pod 'Kingfisher'
   pod 'SnapKit'
   pod 'youtube-ios-player-helper'
+  pod 'RealmSwift'
 
 end

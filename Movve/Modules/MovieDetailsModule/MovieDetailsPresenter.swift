@@ -25,6 +25,11 @@ final class MovieDetailsPresenter {
     private var _cast: [CastMember] = []
     private var _sections: [MovieDetailsSectionType] = []
     private var _videos: [Video] = []
+    private var _isInFavorite = false {
+        didSet {
+            view.reloadFavorite()
+        }
+    }
 
     // MARK: - Lifecycle -
 
@@ -46,6 +51,10 @@ final class MovieDetailsPresenter {
 // MARK: - Extensions -
 
 extension MovieDetailsPresenter: MovieDetailsPresenterInterface {
+    var isInFavorite: Bool {
+        _isInFavorite
+    }
+    
     var movie: MovieDetailsModel? {
         guard let movie = _movie else {
             return nil
@@ -66,6 +75,8 @@ extension MovieDetailsPresenter: MovieDetailsPresenterInterface {
     }
     
     func loadData() {
+        
+        _isInFavorite = interactor.isInFavorite(movieId: movieId)
         
         let group = DispatchGroup()
         
@@ -129,6 +140,18 @@ extension MovieDetailsPresenter: MovieDetailsPresenterInterface {
             return
         }
         wireframe.openURL(url: url)
+    }
+    
+    func tapFavorite() {
+        if _isInFavorite {
+            interactor.removeFromFavorites(movieId: movieId)
+        } else {
+            guard let movie = _movie else {
+                return
+            }
+            interactor.addToFavorites(movie: movie)
+        }
+        _isInFavorite.toggle()
     }
     
 }

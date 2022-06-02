@@ -30,7 +30,7 @@ class DetailsViewController: UIViewController {
     lazy var addToFavoritesNavButton: UIBarButtonItem = {
         let button = UIButton(type: .custom)
         button.setImage(.addToFavoriteIcon, for: .normal)
-        button.addTarget(self, action: #selector(didTapAddToFavorites), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapFavoritesButtonAction), for: .touchUpInside)
         
         let buttonItem = UIBarButtonItem(customView: button)
         let currWidth = buttonItem.customView?.widthAnchor.constraint(equalToConstant: 28)
@@ -43,7 +43,7 @@ class DetailsViewController: UIViewController {
     lazy var removeFromFavoritesNavButton: UIBarButtonItem = {
         let button = UIButton(type: .custom)
         button.setImage(.removeFromFavoriteIcon, for: .normal)
-        button.addTarget(self, action: #selector(didTapRemoveFromFavorites), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapFavoritesButtonAction), for: .touchUpInside)
         
         let buttonItem = UIBarButtonItem(customView: button)
         let currWidth = buttonItem.customView?.widthAnchor.constraint(equalToConstant: 28)
@@ -86,21 +86,21 @@ class DetailsViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
-    func setupNavigationBar() {
+    func setupNavigationBar(isInFavorite: Bool = false) {
         navigationItem.leftBarButtonItem = returnNavButton
-        navigationItem.rightBarButtonItem = addToFavoritesNavButton
+        navigationItem.rightBarButtonItem = isInFavorite ? removeFromFavoritesNavButton : addToFavoritesNavButton
     }
     
-    @objc func didTapBackButton() {
+    @objc private func didTapBackButton() {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func didTapAddToFavorites() {
-        navigationItem.rightBarButtonItem = removeFromFavoritesNavButton
+    @objc private func didTapFavoritesButtonAction() {
+        didTapFavoritesButton()
     }
     
-    @objc func didTapRemoveFromFavorites() {
-        navigationItem.rightBarButtonItem = addToFavoritesNavButton
+    func didTapFavoritesButton() {
+        print("did tap favorites button")
     }
     
 }

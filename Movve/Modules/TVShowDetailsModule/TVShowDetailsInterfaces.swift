@@ -20,6 +20,7 @@ protocol TVShowDetailsWireframeInterface: WireframeInterface {
 
 protocol TVShowDetailsViewInterface: ViewInterface {
     func reloadData()
+    func updateFavorites()
 }
 
 protocol TVShowDetailsPresenterInterface: PresenterInterface {
@@ -27,13 +28,19 @@ protocol TVShowDetailsPresenterInterface: PresenterInterface {
     var cast: [CastMemberModel] { get }
     var sections: [TVShowDetailsSectionType] { get }
     var videos: [Video] { get }
+    var isInFavorite: Bool { get }
     
     func loadData()
     func selectWatchNow()
+    func tapFavorite()
 }
 
 protocol TVShowDetailsInteractorInterface: InteractorInterface {
     func getTVShowDetails(id movieId: Int, completion: @escaping (Result<TVShowDetails, Error>) -> Void)
     func getCast(id movieId: Int, completion: @escaping (Result<Credits, Error>) -> Void)
     func getTVShowVideos(id movieId: Int, completion: @escaping (Result<[Video], Error>) -> Void)
+    
+    func addToFavorites(tvShow: TVShowDetails)
+    func removeFromFavorites(tvShowId: Int)
+    func isInFavorite(tvShowId: Int) -> Bool
 }
