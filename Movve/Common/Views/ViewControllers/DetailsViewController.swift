@@ -14,10 +14,50 @@ class DetailsViewController: UIViewController {
     var posterHeight: Constraint!
     var prevNavBarAppearance: UINavigationBarAppearance?
     
+    lazy var returnNavButton: UIBarButtonItem = {
+        let button = UIButton(type: .custom)
+        button.setImage(.returnNavBarIcon, for: .normal)
+        button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
+        
+        let buttonItem = UIBarButtonItem(customView: button)
+        let currWidth = buttonItem.customView?.widthAnchor.constraint(equalToConstant: 28)
+        let currHeight = buttonItem.customView?.heightAnchor.constraint(equalToConstant: 28)
+        currWidth?.isActive = true
+        currHeight?.isActive = true
+        return buttonItem
+    }()
+    
+    lazy var addToFavoritesNavButton: UIBarButtonItem = {
+        let button = UIButton(type: .custom)
+        button.setImage(.addToFavoriteIcon, for: .normal)
+        button.addTarget(self, action: #selector(didTapAddToFavorites), for: .touchUpInside)
+        
+        let buttonItem = UIBarButtonItem(customView: button)
+        let currWidth = buttonItem.customView?.widthAnchor.constraint(equalToConstant: 28)
+        let currHeight = buttonItem.customView?.heightAnchor.constraint(equalToConstant: 28)
+        currWidth?.isActive = true
+        currHeight?.isActive = true
+        return buttonItem
+    }()
+    
+    lazy var removeFromFavoritesNavButton: UIBarButtonItem = {
+        let button = UIButton(type: .custom)
+        button.setImage(.removeFromFavoriteIcon, for: .normal)
+        button.addTarget(self, action: #selector(didTapRemoveFromFavorites), for: .touchUpInside)
+        
+        let buttonItem = UIBarButtonItem(customView: button)
+        let currWidth = buttonItem.customView?.widthAnchor.constraint(equalToConstant: 28)
+        let currHeight = buttonItem.customView?.heightAnchor.constraint(equalToConstant: 28)
+        currWidth?.isActive = true
+        currHeight?.isActive = true
+        return buttonItem
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        prevNavBarAppearance = navigationController?.navigationBar.standardAppearance
+        prevNavBarAppearance = navigationController?.navigationBar.scrollEdgeAppearance
         updateNavBarTransparency()
+        setupNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,6 +84,23 @@ class DetailsViewController: UIViewController {
         appearance.titleTextAttributes = [.foregroundColor: UIColor.appTextColor.withAlphaComponent(offset)]
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    func setupNavigationBar() {
+        navigationItem.leftBarButtonItem = returnNavButton
+        navigationItem.rightBarButtonItem = addToFavoritesNavButton
+    }
+    
+    @objc func didTapBackButton() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func didTapAddToFavorites() {
+        navigationItem.rightBarButtonItem = removeFromFavoritesNavButton
+    }
+    
+    @objc func didTapRemoveFromFavorites() {
+        navigationItem.rightBarButtonItem = addToFavoritesNavButton
     }
     
 }

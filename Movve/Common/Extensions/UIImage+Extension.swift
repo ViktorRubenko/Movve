@@ -14,4 +14,13 @@ extension UIImage {
     static var personPlaceholder: UIImage? {
         UIImage(named: "human_placholder")
     }
+    static var addToFavoriteIcon: UIImage? {
+        UIImage(named: "bookmark")
+    }
+    static var removeFromFavoriteIcon: UIImage? {
+        UIImage(named: "filled_bookmark")
+    }
+    static var returnNavBarIcon: UIImage? {
+        UIImage(named: "chevron_left_fill")
+    }
 }
