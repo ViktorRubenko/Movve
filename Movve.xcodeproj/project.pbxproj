@@ -80,6 +80,7 @@
 		E3FD89C52848D16400D77500 /* TVShowDetailsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FD89C02848D16400D77500 /* TVShowDetailsInteractor.swift */; };
 		E3FD89C62848D16400D77500 /* TVShowDetailsWireframe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FD89C12848D16400D77500 /* TVShowDetailsWireframe.swift */; };
 		E3FD89CA2848D23300D77500 /* TVShowDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FD89C92848D23300D77500 /* TVShowDetailsModel.swift */; };
+		E3FD89CD2848DE2400D77500 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FD89CC2848DE2400D77500 /* DetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -161,6 +162,7 @@
 		E3FD89C02848D16400D77500 /* TVShowDetailsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailsInteractor.swift; sourceTree = "<group>"; };
 		E3FD89C12848D16400D77500 /* TVShowDetailsWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailsWireframe.swift; sourceTree = "<group>"; };
 		E3FD89C92848D23300D77500 /* TVShowDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailsModel.swift; sourceTree = "<group>"; };
+		E3FD89CC2848DE2400D77500 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,11 +293,9 @@
 		E37C2DDB28464D1C00C78CC1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E3FD89CF2848DE3900D77500 /* ViewControllers */,
 				E37C2DE128466B9B00C78CC1 /* Cells */,
-				E3AD91E128456D9B000538C8 /* CollectionHeaderView.swift */,
-				E37C2DD42846410300C78CC1 /* PosterInfoView.swift */,
-				E37C2DD7284647A100C78CC1 /* GradientView.swift */,
-				E37C2DE628467C5700C78CC1 /* StarsRatingView.swift */,
+				E3FD89CE2848DE3100D77500 /* Views */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -475,6 +475,25 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		E3FD89CE2848DE3100D77500 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E3AD91E128456D9B000538C8 /* CollectionHeaderView.swift */,
+				E37C2DD42846410300C78CC1 /* PosterInfoView.swift */,
+				E37C2DD7284647A100C78CC1 /* GradientView.swift */,
+				E37C2DE628467C5700C78CC1 /* StarsRatingView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E3FD89CF2848DE3900D77500 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E3FD89CC2848DE2400D77500 /* DetailsViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		E48819E15BD9E8740C17D9D1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -602,6 +621,7 @@
 				E36485192844321400E33155 /* BaseWireframe.swift in Sources */,
 				E3BBD7B32845458100FB0CD5 /* TVSeason.swift in Sources */,
 				E3FD89C52848D16400D77500 /* TVShowDetailsInteractor.swift in Sources */,
+				E3FD89CD2848DE2400D77500 /* DetailsViewController.swift in Sources */,
 				E3D169D52844EE480039FA11 /* RootWireframe.swift in Sources */,
 				E3D169C42844EC5A0039FA11 /* MovieDetailsPresenter.swift in Sources */,
 				E37C2DD8284647A100C78CC1 /* GradientView.swift in Sources */,

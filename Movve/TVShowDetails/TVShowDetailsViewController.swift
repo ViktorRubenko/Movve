@@ -11,7 +11,7 @@
 import UIKit
 import SnapKit
 
-final class TVShowDetailsViewController: UIViewController {
+final class TVShowDetailsViewController: DetailsViewController {
     
     // MARK: - Public properties -
     
@@ -63,29 +63,14 @@ final class TVShowDetailsViewController: UIViewController {
         return collecitonView
     }()
     
-    private let posterInfoView = PosterInfoView(frame: .zero, bottomGradientColor: .appBackground)
-    private var posterHeight: Constraint!
-    private var navBarModifyAllowed = false
-    
     // MARK: - Lifecycle -
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
-        setupNavigationBar()
         presenter.loadData()
         
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = true
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        tabBarController?.tabBar.isHidden = false
     }
     
 }
@@ -109,17 +94,6 @@ private extension TVShowDetailsViewController {
             posterHeight = make.height.equalTo(view.bounds.height * 0.65).constraint
         }
         collecitonView.contentInset.top = posterHeight.layoutConstraints.first!.constant
-    }
-    
-    func setupNavigationBar(offset yOffset: CGFloat = -1000) {
-        var offset = (yOffset + 200) / 50
-        offset = offset > 1 ? 1 : offset
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
-        appearance.backgroundColor = .appBackground.withAlphaComponent(offset - 0.03)
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.appTextColor.withAlphaComponent(offset)]
-        navigationController?.navigationBar.standardAppearance = appearance
-        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
     
     func createCollectionLayout(_ sectionIndex: Int) -> NSCollectionLayoutSection {
@@ -318,15 +292,5 @@ extension TVShowDetailsViewController: UICollectionViewDelegate, UICollectionVie
         headerView.label.font = .systemFont(ofSize: 20, weight: .semibold)
         return headerView
     }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offset = scrollView.contentOffset.y
-            posterHeight.deactivate()
-            posterInfoView.snp.makeConstraints { make in
-                posterHeight = make.height.equalTo(offset <= 0 ? offset * -1 : 0).constraint
-            }
-            setupNavigationBar(offset: offset)
-    }
-    
 }
 
