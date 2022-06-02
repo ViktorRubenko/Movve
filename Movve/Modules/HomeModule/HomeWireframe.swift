@@ -46,7 +46,7 @@ extension HomeWireframe: TabBarViewType {
     }
     
     var tabTitle: String? {
-        "Home"
+        nil
     }
     
     var tabView: UIViewController {

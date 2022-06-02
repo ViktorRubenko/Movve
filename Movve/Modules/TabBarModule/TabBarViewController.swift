@@ -25,10 +25,10 @@ final class TabBarViewController: UITabBarController {
         layer.path = UIBezierPath(
             roundedRect:
                 CGRect(
-                    x: 30,
+                    x: self.view.bounds.width / 2 - 100,
                     y: self.tabBar.bounds.minY - 5,
-                    width: self.tabBar.bounds.width - 60,
-                    height: self.tabBar.bounds.height + 10
+                    width: 200,
+                    height: self.tabBar.bounds.height
                 ),
             cornerRadius: (self.tabBar.frame.width / 2)
         ).cgPath
@@ -41,11 +41,11 @@ final class TabBarViewController: UITabBarController {
         
         if let items = self.tabBar.items {
             items.forEach {
-                $0.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: -15, right: 0)
+                $0.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             }
         }
-        self.tabBar.itemWidth = 30.0
-        self.tabBar.itemPositioning = .fill
+        self.tabBar.itemWidth = 40.0
+        self.tabBar.itemPositioning = .centered
     }
     
 }
