@@ -75,6 +75,7 @@ class FavoriteTableViewCell: UITableViewCell {
     private let titleStackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .vertical
+        sv.distribution = .fill
         return sv
     }()
     private let ratingVStackView: UIStackView = {
@@ -97,6 +98,7 @@ class FavoriteTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         posterImageView.image = nil
+        titleLabel.text = nil
     }
 }
 
@@ -119,6 +121,7 @@ private extension FavoriteTableViewCell {
         bottomContainer.addSubview(ratingLabel)
         bottomContainer.addSubview(votesLabel)
         bottomContainer.addSubview(dateAddedLabel)
+        
     }
     
     func setupConstraints() {
@@ -149,6 +152,7 @@ private extension FavoriteTableViewCell {
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
         }
+        releaseYearLabel.setContentHuggingPriority(.defaultHigh, for: .vertical)
 
         titleStackView.snp.makeConstraints { make in
             make.top.equalToSuperview()
