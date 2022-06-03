@@ -34,12 +34,14 @@ extension FavoritesInteractor: FavoritesInteractorInterface {
         dataService.removeFromFavorites(id: id, kind: .TVShow)
     }
     
-    func getFavoriteMovies() -> [FavoriteModel] {
-        dataService.getFavorites().filter{ $0.kindEnum == .Movie }.map{ mapper.favoriteDataModelToFavoriteModel($0) }
+    func getFavoriteMovies(sortedBy: FavoriteModelSortedKey, ascending: Bool = true) -> [FavoriteModel] {
+        dataService.getFavorites(sortedBy: sortedBy.rawValue, ascending: ascending)
+            .filter{ $0.kindEnum == .Movie }.map{ mapper.favoriteDataModelToFavoriteModel($0) }
     }
     
-    func getFavoriteTVShows() -> [FavoriteModel] {
-        dataService.getFavorites().filter{ $0.kindEnum == .TVShow }.map{ mapper.favoriteDataModelToFavoriteModel($0) }
+    func getFavoriteTVShows(sortedBy: FavoriteModelSortedKey, ascending: Bool = true) -> [FavoriteModel] {
+        dataService.getFavorites(sortedBy: sortedBy.rawValue, ascending: ascending)
+            .filter{ $0.kindEnum == .TVShow }.map{ mapper.favoriteDataModelToFavoriteModel($0) }
     }
     
     

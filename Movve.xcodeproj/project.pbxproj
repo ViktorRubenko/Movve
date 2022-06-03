@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DAF728ECFF10BE964AFD48ED /* Pods_Movve.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78AC4FADA40A3CEB89BF2973 /* Pods_Movve.framework */; };
+		37DA6FEBCDFA8B231FCEEFC7 /* Pods_Movve.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEE2D708447643CDD1884BC6 /* Pods_Movve.framework */; };
 		E340AE832844262B008A2AD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E340AE822844262B008A2AD4 /* AppDelegate.swift */; };
 		E340AE852844262B008A2AD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E340AE842844262B008A2AD4 /* SceneDelegate.swift */; };
 		E340AE8C2844262D008A2AD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E340AE8B2844262D008A2AD4 /* Assets.xcassets */; };
@@ -89,9 +89,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0AD13C0F4C1D15A95B165D0B /* Pods-Movve.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movve.debug.xcconfig"; path = "Target Support Files/Pods-Movve/Pods-Movve.debug.xcconfig"; sourceTree = "<group>"; };
-		3EC8655970D1AF933BE0A761 /* Pods-Movve.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movve.release.xcconfig"; path = "Target Support Files/Pods-Movve/Pods-Movve.release.xcconfig"; sourceTree = "<group>"; };
-		78AC4FADA40A3CEB89BF2973 /* Pods_Movve.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Movve.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		51AC58A32FEE392E57D6EB99 /* Pods-Movve.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movve.debug.xcconfig"; path = "Target Support Files/Pods-Movve/Pods-Movve.debug.xcconfig"; sourceTree = "<group>"; };
+		6F50D5F74C2003AB8FB2B426 /* Pods-Movve.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movve.release.xcconfig"; path = "Target Support Files/Pods-Movve/Pods-Movve.release.xcconfig"; sourceTree = "<group>"; };
 		E340AE7F2844262B008A2AD4 /* Movve.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Movve.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E340AE822844262B008A2AD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E340AE842844262B008A2AD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -173,6 +172,7 @@
 		E3FD89C12848D16400D77500 /* TVShowDetailsWireframe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailsWireframe.swift; sourceTree = "<group>"; };
 		E3FD89C92848D23300D77500 /* TVShowDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowDetailsModel.swift; sourceTree = "<group>"; };
 		E3FD89CC2848DE2400D77500 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		FEE2D708447643CDD1884BC6 /* Pods_Movve.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Movve.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,7 +180,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DAF728ECFF10BE964AFD48ED /* Pods_Movve.framework in Frameworks */,
+				37DA6FEBCDFA8B231FCEEFC7 /* Pods_Movve.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,10 +190,18 @@
 		1047ECA7366E881DEC7A07E7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0AD13C0F4C1D15A95B165D0B /* Pods-Movve.debug.xcconfig */,
-				3EC8655970D1AF933BE0A761 /* Pods-Movve.release.xcconfig */,
+				51AC58A32FEE392E57D6EB99 /* Pods-Movve.debug.xcconfig */,
+				6F50D5F74C2003AB8FB2B426 /* Pods-Movve.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		B5EC31FE9AE486CD46D4D271 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FEE2D708447643CDD1884BC6 /* Pods_Movve.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		E340AE762844262B008A2AD4 = {
@@ -204,7 +212,7 @@
 				E340AE8D2844262D008A2AD4 /* LaunchScreen.storyboard */,
 				E340AE802844262B008A2AD4 /* Products */,
 				1047ECA7366E881DEC7A07E7 /* Pods */,
-				E48819E15BD9E8740C17D9D1 /* Frameworks */,
+				B5EC31FE9AE486CD46D4D271 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -533,14 +541,6 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		E48819E15BD9E8740C17D9D1 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				78AC4FADA40A3CEB89BF2973 /* Pods_Movve.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -548,11 +548,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E340AE932844262D008A2AD4 /* Build configuration list for PBXNativeTarget "Movve" */;
 			buildPhases = (
-				62BA9B50479638C3AC31AA81 /* [CP] Check Pods Manifest.lock */,
+				252F30CEB8567610C88F0411 /* [CP] Check Pods Manifest.lock */,
 				E340AE7B2844262B008A2AD4 /* Sources */,
 				E340AE7C2844262B008A2AD4 /* Frameworks */,
 				E340AE7D2844262B008A2AD4 /* Resources */,
-				60DA01A523BB8B3038D44E1E /* [CP] Embed Pods Frameworks */,
+				C8A7EC0D54ABA2C4A2EDCAD1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -609,24 +609,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		60DA01A523BB8B3038D44E1E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Movve/Pods-Movve-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Movve/Pods-Movve-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Movve/Pods-Movve-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		62BA9B50479638C3AC31AA81 /* [CP] Check Pods Manifest.lock */ = {
+		252F30CEB8567610C88F0411 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -646,6 +629,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C8A7EC0D54ABA2C4A2EDCAD1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Movve/Pods-Movve-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Movve/Pods-Movve-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Movve/Pods-Movve-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -868,7 +868,7 @@
 		};
 		E340AE942844262D008A2AD4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0AD13C0F4C1D15A95B165D0B /* Pods-Movve.debug.xcconfig */;
+			baseConfigurationReference = 51AC58A32FEE392E57D6EB99 /* Pods-Movve.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -898,7 +898,7 @@
 		};
 		E340AE952844262D008A2AD4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3EC8655970D1AF933BE0A761 /* Pods-Movve.release.xcconfig */;
+			baseConfigurationReference = 6F50D5F74C2003AB8FB2B426 /* Pods-Movve.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

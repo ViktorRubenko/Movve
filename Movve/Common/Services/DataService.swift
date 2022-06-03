@@ -11,7 +11,7 @@ import RealmSwift
 protocol DataServiceInterface {
     func addToFavorite(item: MovieDetails)
     func addToFavorite(item: TVShowDetails)
-    func getFavorites() -> [FavoriteDataModel]
+    func getFavorites(sortedBy: String?, ascending: Bool) -> [FavoriteDataModel]
     func removeFromFavorites(id: Int, kind: FavoriteModelKind)
     func isInFavorites(id: Int, kind: FavoriteModelKind) -> Bool
 }
@@ -47,7 +47,7 @@ final class RealmDataService {
     private func get<R>(
         fromEntity entity: R.Type,
         sortedByKey sortKey: String?,
-        isAscending: Bool
+        isAscending: Bool = true
     ) -> Results<R> where R: Object {
         var objects = realm.objects(entity)
         if sortKey != nil {
@@ -73,17 +73,16 @@ extension RealmDataService: DataServiceInterface {
     
     func isInFavorites(id: Int, kind: FavoriteModelKind) -> Bool {
         let compoundKey = "\(id)\(kind.rawValue)"
-        print(compoundKey)
         return exists(id: compoundKey, ofType: FavoriteDataModel.self)
     }
     
-    func getFavorites() -> [FavoriteDataModel] {
-        Array(get(fromEntity: FavoriteDataModel.self, sortedByKey: nil, isAscending: true))
+    func getFavorites(sortedBy: String?, ascending: Bool = true) -> [FavoriteDataModel] {
+        Array(get(fromEntity: FavoriteDataModel.self, sortedByKey: sortedBy, isAscending: ascending))
     }
     
     func removeFromFavorites(id: Int, kind: FavoriteModelKind) {
         let compoundKey = "\(id)\(kind.rawValue)"
-        let objectsToDelete = getFavorites().filter { $0.compoundKey == compoundKey }
+        let objectsToDelete = getFavorites(sortedBy: nil).filter { $0.compoundKey == compoundKey }
         objectsToDelete.forEach { delete($0) }
     }
 }

@@ -159,14 +159,20 @@ extension Mapper: MovieDBMapperInterface {
     }
     
     func favoriteDataModelToFavoriteModel(_ dataModel: FavoriteDataModel) -> FavoriteModel {
-        FavoriteModel(
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        let date = dateFormatter.string(from: dataModel.dateAdded)
+        
+        return FavoriteModel(
             id: dataModel.id,
             title: dataModel.title,
             releaseYear: releaseYearFromDBDate(dataModel.releaseDate),
             rating: dataModel.rating,
             posterURL: dataModel.posterPath != nil ? Constants.ImagesURL.w300.appendingPathComponent(dataModel.posterPath!) : nil,
             votes: dataModel.votes,
-            genres: dataModel.genres.joined(separator: ", ")
+            genres: dataModel.genres.joined(separator: ", "),
+            dateAdded: date
         )
     }
 }

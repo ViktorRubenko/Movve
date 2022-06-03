@@ -8,6 +8,10 @@
 import Foundation
 import RealmSwift
 
+enum FavoriteModelSortedKey: String {
+    case dateAdded, title, rating
+}
+
 enum FavoriteModelKind: String {
     case Movie, TVShow
 }

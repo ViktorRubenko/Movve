@@ -29,7 +29,8 @@ final class FavoritesViewController: UIViewController {
         tv.delegate = self
         tv.dataSource = self
         tv.backgroundColor = .clear
-        tv.rowHeight = 140
+        tv.rowHeight = UITableView.automaticDimension
+        tv.estimatedRowHeight = 44
         tv.register(FavoriteTableViewCell.self, forCellReuseIdentifier: FavoriteTableViewCell.identifier)
         return tv
     }()
@@ -44,8 +45,8 @@ final class FavoritesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationItem()
         setupViews()
-//        presenter.loadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,8 +87,34 @@ private extension FavoritesViewController {
         }
     }
     
+    func showEmptyView() {
+        emptyBackgroundView.isHidden = !presenter.items.isEmpty
+    }
+    
+    func setupNavigationItem() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "arrow.up.arrow.down.circle"),
+            style: .plain,
+            target: self,
+            action: #selector(didTapSortButton)
+        )
+    }
+
+    // MARK: - Actions -
+    
     @objc func didChangeSegment() {
         presenter.didSelectSegment(index: segmentedControl.selectedSegmentIndex)
+    }
+
+    @objc func didTapSortButton() {
+        let alert = UIAlertController(title: "Sort By", message: nil, preferredStyle: .alert)
+        presenter.sortOptions.forEach { value in
+            alert.addAction(UIAlertAction(title: value, style: .default, handler: { _ in
+                self.presenter.didSelectSort(by: value)
+            }))
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alert, animated: true)
     }
 }
 
@@ -95,7 +122,7 @@ private extension FavoritesViewController {
 
 extension FavoritesViewController: FavoritesViewInterface {
     func reloadData() {
-        emptyBackgroundView.isHidden = !presenter.items.isEmpty
+        showEmptyView()
         tableView.reloadData()
     }
     
@@ -103,6 +130,7 @@ extension FavoritesViewController: FavoritesViewInterface {
         tableView.beginUpdates()
         tableView.deleteRows(at: [indexPath], with: .right)
         tableView.endUpdates()
+        showEmptyView()
     }
     
 }
@@ -116,7 +144,6 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         let item = presenter.item(for: indexPath)
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteTableViewCell.identifier, for: indexPath) as! FavoriteTableViewCell
         cell.configure(item)
-        cell.layoutIfNeeded()
         return cell
     }
     

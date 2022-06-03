@@ -23,17 +23,19 @@ protocol FavoritesViewInterface: ViewInterface {
 protocol FavoritesPresenterInterface: PresenterInterface {
     var items: [FavoriteModel] { get }
     var segments: [String] { get }
+    var sortOptions: [String] { get }
     
     func loadData()
     func didSelectSegment(index: Int)
     func item(for indexPath: IndexPath) -> FavoriteModel
     func didSelectItem(indexPath: IndexPath)
     func swapToRemove(indexPath: IndexPath)
+    func didSelectSort(by value: String)
 }
 
 protocol FavoritesInteractorInterface: InteractorInterface {
-    func getFavoriteMovies() -> [FavoriteModel]
-    func getFavoriteTVShows() -> [FavoriteModel]
+    func getFavoriteMovies(sortedBy: FavoriteModelSortedKey, ascending: Bool) -> [FavoriteModel]
+    func getFavoriteTVShows(sortedBy: FavoriteModelSortedKey, ascending: Bool) -> [FavoriteModel]
     func removeFavoriteMovie(id: Int)
     func removeFavoriteTVShow(id: Int)
 }

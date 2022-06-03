@@ -15,4 +15,5 @@ struct FavoriteModel {
     let posterURL: URL?
     let votes: Int
     let genres: String
+    let dateAdded: String
 }

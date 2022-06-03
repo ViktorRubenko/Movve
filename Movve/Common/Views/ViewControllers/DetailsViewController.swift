@@ -45,6 +45,7 @@ class DetailsViewController: UIViewController {
         let button = UIButton(type: .custom)
         button.setImage(.removeFromFavoriteIcon, for: .normal)
         button.addTarget(self, action: #selector(didTapFavoritesButtonAction), for: .touchUpInside)
+        button.imageView?.contentMode = .scaleAspectFit
         
         let buttonItem = UIBarButtonItem(customView: button)
         let currWidth = buttonItem.customView?.widthAnchor.constraint(equalToConstant: 28)

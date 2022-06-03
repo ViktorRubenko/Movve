@@ -55,4 +55,8 @@ extension UIColor {
     static var buttonColor: UIColor {
         UIColor(hex: "e11a38", alpha: 1)
     }
+    
+    static var appCellBackground: UIColor {
+        UIColor(hex: "303038", alpha: 1)
+    }
 }

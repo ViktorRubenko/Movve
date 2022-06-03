@@ -10,8 +10,14 @@
 
 import Foundation
 
-enum FavoriteSegments: String {
+fileprivate enum FavoriteSegments: String {
     case Movie, TVShow
+}
+
+fileprivate enum SortOptions: String {
+    case dateAdded = "Date Added"
+    case title = "Title"
+    case rating = "Rating"
 }
 
 final class FavoritesPresenter {
@@ -24,6 +30,8 @@ final class FavoritesPresenter {
     private var _items = [FavoriteModel]()
     private var currentFavorites: FavoriteSegments = .Movie
     private var _segments: [FavoriteSegments] = [.Movie, .TVShow]
+    private var _sortOptions: [SortOptions] = [.dateAdded, .title, .rating]
+    private var currentSortOption: SortOptions = .dateAdded
 
     // MARK: - Lifecycle -
 
@@ -41,6 +49,10 @@ final class FavoritesPresenter {
 // MARK: - Extensions -
 
 extension FavoritesPresenter: FavoritesPresenterInterface {
+    var sortOptions: [String] {
+        _sortOptions.map { $0.rawValue }
+    }
+    
     var items: [FavoriteModel] {
         _items
     }
@@ -50,11 +62,21 @@ extension FavoritesPresenter: FavoritesPresenterInterface {
     }
     
     func loadData() {
+        let key: FavoriteModelSortedKey
+        switch currentSortOption {
+        case .dateAdded:
+            key = .dateAdded
+        case .rating:
+            key = .rating
+        case .title:
+            key = .title
+        }
+        
         switch currentFavorites {
             case .Movie:
-                _items = interactor.getFavoriteMovies()
+            _items = interactor.getFavoriteMovies(sortedBy: key, ascending: false)
             case .TVShow:
-                _items = interactor.getFavoriteTVShows()
+            _items = interactor.getFavoriteTVShows(sortedBy: key, ascending: false)
         }
         view.reloadData()
     }
@@ -86,5 +108,13 @@ extension FavoritesPresenter: FavoritesPresenterInterface {
         }
         _items.remove(at: indexPath.row)
         view.removeItem(at: indexPath)
+    }
+    
+    func didSelectSort(by value: String) {
+        guard let sortOption = SortOptions(rawValue: value) else {
+            return
+        }
+        currentSortOption = sortOption
+        loadData()
     }
 }
