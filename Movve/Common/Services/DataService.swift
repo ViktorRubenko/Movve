@@ -73,6 +73,7 @@ extension RealmDataService: DataServiceInterface {
     
     func isInFavorites(id: Int, kind: FavoriteModelKind) -> Bool {
         let compoundKey = "\(id)\(kind.rawValue)"
+        print(compoundKey)
         return exists(id: compoundKey, ofType: FavoriteDataModel.self)
     }
     

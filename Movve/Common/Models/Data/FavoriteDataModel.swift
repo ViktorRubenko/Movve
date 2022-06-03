@@ -47,9 +47,9 @@ class FavoriteDataModel: Object {
         self.posterPath = movie.posterPath
         self.rating = movie.voteAverage
         self.votes = movie.voteCount
+        self.kindEnum = .Movie
         movie.genres.forEach { self.genres.append($0.name) }
         self.compoundKey = compoundKeyValue()
-        self.kindEnum = .Movie
     }
     
     convenience init(tvShow: TVShowDetails) {
@@ -61,9 +61,9 @@ class FavoriteDataModel: Object {
         self.posterPath = tvShow.posterPath
         self.rating = tvShow.voteAverage
         self.votes = tvShow.voteCount
+        self.kindEnum = .TVShow
         tvShow.genres.forEach { self.genres.append($0.name) }
         self.compoundKey = compoundKeyValue()
-        self.kindEnum = .TVShow
     }
     
     func compoundKeyValue() -> String {
