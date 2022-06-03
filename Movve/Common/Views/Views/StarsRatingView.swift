@@ -41,6 +41,7 @@ class StarsRatingView: UIView {
     
     private func setupViews() {
         let stackView = UIStackView()
+        stackView.distribution = .fillEqually
         
         for view in imageViews {
             stackView.addArrangedSubview(view)
@@ -48,10 +49,7 @@ class StarsRatingView: UIView {
         addSubview(stackView)
         
         stackView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.leading.equalToSuperview()
+            make.edges.equalToSuperview()
         }
     }
 }

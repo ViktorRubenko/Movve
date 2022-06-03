@@ -10,6 +10,10 @@
 
 import Foundation
 
+enum FavoriteSegments: String {
+    case Movie, TVShow
+}
+
 final class FavoritesPresenter {
 
     // MARK: - Private properties -
@@ -17,6 +21,9 @@ final class FavoritesPresenter {
     private unowned let view: FavoritesViewInterface
     private let interactor: FavoritesInteractorInterface
     private let wireframe: FavoritesWireframeInterface
+    private var _items = [FavoriteModel]()
+    private var currentFavorites: FavoriteSegments = .Movie
+    private var _segments: [FavoriteSegments] = [.Movie, .TVShow]
 
     // MARK: - Lifecycle -
 
@@ -34,4 +41,50 @@ final class FavoritesPresenter {
 // MARK: - Extensions -
 
 extension FavoritesPresenter: FavoritesPresenterInterface {
+    var items: [FavoriteModel] {
+        _items
+    }
+    
+    var segments: [String] {
+        _segments.map { $0.rawValue }
+    }
+    
+    func loadData() {
+        switch currentFavorites {
+            case .Movie:
+                _items = interactor.getFavoriteMovies()
+            case .TVShow:
+                _items = interactor.getFavoriteTVShows()
+        }
+        view.reloadData()
+    }
+    
+    func didSelectSegment(index: Int) {
+        currentFavorites = _segments[index]
+        loadData()
+    }
+    
+    func item(for indexPath: IndexPath) -> FavoriteModel {
+        _items[indexPath.row]
+    }
+    
+    func didSelectItem(indexPath: IndexPath) {
+        switch currentFavorites {
+        case .Movie:
+            wireframe.navigateToMovieDetails(movieId: item(for: indexPath).id)
+        case .TVShow:
+            wireframe.navigateToTVShowDetails(tvShowId: item(for: indexPath).id)
+        }
+    }
+    
+    func swapToRemove(indexPath: IndexPath) {
+        switch currentFavorites {
+        case .Movie:
+            interactor.removeFavoriteMovie(id: item(for: indexPath).id)
+        case .TVShow:
+            interactor.removeFavoriteTVShow(id: item(for: indexPath).id)
+        }
+        _items.remove(at: indexPath.row)
+        view.removeItem(at: indexPath)
+    }
 }

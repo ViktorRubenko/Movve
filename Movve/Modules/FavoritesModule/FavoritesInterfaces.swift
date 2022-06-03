@@ -11,13 +11,29 @@
 import UIKit
 
 protocol FavoritesWireframeInterface: WireframeInterface {
+    func navigateToMovieDetails(movieId: Int)
+    func navigateToTVShowDetails(tvShowId: Int)
 }
 
 protocol FavoritesViewInterface: ViewInterface {
+    func reloadData()
+    func removeItem(at indexPath: IndexPath)
 }
 
 protocol FavoritesPresenterInterface: PresenterInterface {
+    var items: [FavoriteModel] { get }
+    var segments: [String] { get }
+    
+    func loadData()
+    func didSelectSegment(index: Int)
+    func item(for indexPath: IndexPath) -> FavoriteModel
+    func didSelectItem(indexPath: IndexPath)
+    func swapToRemove(indexPath: IndexPath)
 }
 
 protocol FavoritesInteractorInterface: InteractorInterface {
+    func getFavoriteMovies() -> [FavoriteModel]
+    func getFavoriteTVShows() -> [FavoriteModel]
+    func removeFavoriteMovie(id: Int)
+    func removeFavoriteTVShow(id: Int)
 }

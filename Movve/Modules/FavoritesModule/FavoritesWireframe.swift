@@ -30,6 +30,13 @@ final class FavoritesWireframe: BaseWireframe<FavoritesViewController> {
 // MARK: - Extensions -
 
 extension FavoritesWireframe: FavoritesWireframeInterface {
+    func navigateToMovieDetails(movieId: Int) {
+        navigationController?.pushWireframe(MovieDetailsWireframe(movieId: movieId), animated: true)
+    }
+    
+    func navigateToTVShowDetails(tvShowId: Int) {
+        navigationController?.pushWireframe(TVShowDetailsWireframe(tvShowId: tvShowId), animated: true)
+    }
 }
 
 extension FavoritesWireframe: TabBarViewType {

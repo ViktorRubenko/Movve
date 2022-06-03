@@ -11,12 +11,12 @@
 import Foundation
 
 final class MovieDetailsInteractor {
-    private let movieDBService: MovieDBServiceProcotol
-    private let dataService: DataServiceProtocol
+    private let movieDBService: MovieDBServiceInterface
+    private let dataService: DataServiceInterface
     
     init(
-        movieDBService: MovieDBServiceProcotol = MovieDBService.shared,
-        dateService: DataServiceProtocol = RealmDataService.shared
+        movieDBService: MovieDBServiceInterface = MovieDBService.shared,
+        dateService: DataServiceInterface = RealmDataService.shared
     ) {
         self.movieDBService = movieDBService
         self.dataService = dateService
@@ -40,15 +40,15 @@ extension MovieDetailsInteractor: MovieDetailsInteractorInterface {
     }
     
     func addToFavorites(movie: MovieDetails) {
-        dataService.addToFavorite(movie: movie)
+        dataService.addToFavorite(item: movie)
     }
     
     func removeFromFavorites(movieId: Int) {
-        dataService.removeFromFavorites(movieId: movieId)
+        dataService.removeFromFavorites(id: movieId, kind: .Movie)
     }
     
     func isInFavorite(movieId: Int) -> Bool {
-        dataService.isMovieInFavorites(movieId: movieId)
+        dataService.isInFavorites(id: movieId, kind: .Movie)
     }
     
 }

@@ -11,9 +11,36 @@
 import Foundation
 
 final class FavoritesInteractor {
+    var dataService: DataServiceInterface
+    var mapper: MovieDBMapperInterface
+    
+    init(
+        dataService: DataServiceInterface = RealmDataService.shared,
+        mapper: MovieDBMapperInterface = Mapper.shared
+    ) {
+        self.mapper = mapper
+        self.dataService = dataService
+    }
 }
 
 // MARK: - Extensions -
 
 extension FavoritesInteractor: FavoritesInteractorInterface {
+    func removeFavoriteMovie(id: Int) {
+        dataService.removeFromFavorites(id: id, kind: .Movie)
+    }
+    
+    func removeFavoriteTVShow(id: Int) {
+        dataService.removeFromFavorites(id: id, kind: .TVShow)
+    }
+    
+    func getFavoriteMovies() -> [FavoriteModel] {
+        dataService.getFavorites().filter{ $0.kindEnum == .Movie }.map{ mapper.favoriteDataModelToFavoriteModel($0) }
+    }
+    
+    func getFavoriteTVShows() -> [FavoriteModel] {
+        dataService.getFavorites().filter{ $0.kindEnum == .TVShow }.map{ mapper.favoriteDataModelToFavoriteModel($0) }
+    }
+    
+    
 }

@@ -12,7 +12,8 @@ class DetailsViewController: UIViewController {
     
     let posterInfoView = PosterInfoView(frame: .zero, bottomGradientColor: .appBackground)
     var posterHeight: Constraint!
-    var prevNavBarAppearance: UINavigationBarAppearance?
+    var prevNavBarScrollAppearance: UINavigationBarAppearance?
+    var prevNavBarStandardAppearance: UINavigationBarAppearance?
     
     lazy var returnNavButton: UIBarButtonItem = {
         let button = UIButton(type: .custom)
@@ -55,7 +56,8 @@ class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        prevNavBarAppearance = navigationController?.navigationBar.scrollEdgeAppearance
+        prevNavBarScrollAppearance = navigationController?.navigationBar.scrollEdgeAppearance
+        prevNavBarStandardAppearance = navigationController?.navigationBar.standardAppearance
         updateNavBarTransparency()
         setupNavigationBar()
     }
@@ -69,10 +71,11 @@ class DetailsViewController: UIViewController {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
         
-        if let prevNavBarAppearance = prevNavBarAppearance {
-            navigationController?.navigationBar.standardAppearance = prevNavBarAppearance
-            navigationController?.navigationBar.scrollEdgeAppearance = prevNavBarAppearance
+        guard let prevScrollAppearance = prevNavBarScrollAppearance, let prevSdAppearance = prevNavBarStandardAppearance else {
+            return
         }
+        navigationController?.navigationBar.standardAppearance = prevSdAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = prevScrollAppearance
     }
     
     func updateNavBarTransparency(offset yOffset: CGFloat = -1000) {

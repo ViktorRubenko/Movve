@@ -8,17 +8,12 @@
 import Foundation
 import RealmSwift
 
-protocol DataServiceProtocol {
-    func addToFavorite(movie: MovieDetails)
-    func getFavoriteMovies() -> [FavoriteMovieModel]
-    func removeFromFavorites(movieId: Int)
-    func isMovieInFavorites(movieId: Int) -> Bool
-    
-    func addToFavorite(tvShow: TVShowDetails)
-    func getFavoriteTVShows() -> [FavoriteTVShowModel]
-    func removeFromFavorites(tvShowId: Int)
-    func isTVShowInFavorites(tvShowId: Int) -> Bool
-    
+protocol DataServiceInterface {
+    func addToFavorite(item: MovieDetails)
+    func addToFavorite(item: TVShowDetails)
+    func getFavorites() -> [FavoriteDataModel]
+    func removeFromFavorites(id: Int, kind: FavoriteModelKind)
+    func isInFavorites(id: Int, kind: FavoriteModelKind) -> Bool
 }
 
 final class RealmDataService {
@@ -61,44 +56,33 @@ final class RealmDataService {
         return objects
     }
     
-    private func exists<T>(id: Int, ofType: T.Type) -> Bool where T: Object {
+    private func exists<T>(id: String, ofType: T.Type) -> Bool where T: Object {
         realm.object(ofType: ofType, forPrimaryKey: id) != nil
     }
     
 }
 
-extension RealmDataService: DataServiceProtocol {
-    func isMovieInFavorites(movieId: Int) -> Bool {
-        exists(id: movieId, ofType: FavoriteMovieModel.self)
+extension RealmDataService: DataServiceInterface {
+    func addToFavorite(item: MovieDetails) {
+        add(FavoriteDataModel(movie: item))
     }
     
-    func isTVShowInFavorites(tvShowId: Int) -> Bool {
-        exists(id: tvShowId, ofType: FavoriteTVShowModel.self)
+    func addToFavorite(item: TVShowDetails) {
+        add(FavoriteDataModel(tvShow: item))
     }
     
-    func getFavoriteMovies() -> [FavoriteMovieModel] {
-        Array(get(fromEntity: FavoriteMovieModel.self, sortedByKey: nil, isAscending: true))
+    func isInFavorites(id: Int, kind: FavoriteModelKind) -> Bool {
+        let compoundKey = "\(id)\(kind.rawValue)"
+        return exists(id: compoundKey, ofType: FavoriteDataModel.self)
     }
     
-    func removeFromFavorites(movieId id: Int) {
-        let objectsToDelete = getFavoriteMovies().filter { $0.id == id }
+    func getFavorites() -> [FavoriteDataModel] {
+        Array(get(fromEntity: FavoriteDataModel.self, sortedByKey: nil, isAscending: true))
+    }
+    
+    func removeFromFavorites(id: Int, kind: FavoriteModelKind) {
+        let compoundKey = "\(id)\(kind.rawValue)"
+        let objectsToDelete = getFavorites().filter { $0.compoundKey == compoundKey }
         objectsToDelete.forEach { delete($0) }
-    }
-    
-    func getFavoriteTVShows() -> [FavoriteTVShowModel] {
-        Array(get(fromEntity: FavoriteTVShowModel.self, sortedByKey: nil, isAscending: true))
-    }
-    
-    func removeFromFavorites(tvShowId id: Int) {
-        let objectsToDelete = getFavoriteTVShows().filter { $0.id == id }
-        objectsToDelete.forEach { delete($0) }
-    }
-    
-    func addToFavorite(movie: MovieDetails) {
-        add(FavoriteMovieModel(movie: movie))
-    }
-    
-    func addToFavorite(tvShow: TVShowDetails) {
-        add(FavoriteTVShowModel(tvshow: tvShow))
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-protocol MovieDBServiceProcotol {
+protocol MovieDBServiceInterface {
     func discoverMovies(completion: @escaping (Result<[Movie], Error>) -> Void)
     func getMovieDetails(id: Int, completion: @escaping (Result<MovieDetails, Error>) -> Void)
     func getMovieVideos(id: Int, completion: @escaping (Result<[Video], Error>) -> Void)
@@ -35,7 +35,7 @@ final class MovieDBService {
     }
 }
 
-extension MovieDBService: MovieDBServiceProcotol {
+extension MovieDBService: MovieDBServiceInterface {
     func discoverTVShows(completion: @escaping (Result<[TVShow], Error>) -> Void) {
         AF.request(
             Constants.API.discoverTVShows,

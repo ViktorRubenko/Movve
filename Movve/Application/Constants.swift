@@ -19,6 +19,7 @@ enum Constants {
     enum ImagesURL {
         static let base = URL(string: "https://image.tmdb.org/t/p")!
         static let original = base.appendingPathComponent("/original")
+        static let w300 = base.appendingPathComponent("/w300")
         static let w500 = base.appendingPathComponent("/w500")
         static let w780 = base.appendingPathComponent("/w780")
     }

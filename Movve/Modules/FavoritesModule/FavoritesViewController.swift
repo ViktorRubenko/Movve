@@ -15,16 +15,118 @@ final class FavoritesViewController: UIViewController {
     // MARK: - Public properties -
 
     var presenter: FavoritesPresenterInterface!
+    
+    // MARK: - Private properties -
+    private lazy var segmentedControl: UISegmentedControl = {
+        let sc = UISegmentedControl(items: presenter.segments)
+        sc.selectedSegmentIndex = 0
+        sc.addTarget(self, action: #selector(didChangeSegment), for: .valueChanged)
+        return sc
+    }()
+    
+    private lazy var tableView: UITableView = {
+        let tv = UITableView()
+        tv.delegate = self
+        tv.dataSource = self
+        tv.backgroundColor = .clear
+        tv.rowHeight = 140
+        tv.register(FavoriteTableViewCell.self, forCellReuseIdentifier: FavoriteTableViewCell.identifier)
+        return tv
+    }()
+    
+    private let emptyBackgroundView = EmptyBackgroundView(
+        image: UIImage(systemName: "bookmark"),
+        topText: "Favorites",
+        bottomText: "You don't have any favorites."
+    )
 
     // MARK: - Lifecycle -
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
+//        presenter.loadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.title = "Favorites"
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presenter.loadData()
     }
 
+}
+
+private extension FavoritesViewController {
+    func setupViews() {
+        let safeArea = view.safeAreaLayoutGuide
+        view.backgroundColor = .appBackground
+        
+        view.addSubview(segmentedControl)
+        segmentedControl.snp.makeConstraints { make in
+            make.top.equalTo(safeArea)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
+        
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(segmentedControl.snp.bottom)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+        
+        view.insertSubview(emptyBackgroundView, at: 0)
+        emptyBackgroundView.snp.makeConstraints { make in
+            make.edges.equalTo(safeArea)
+        }
+    }
+    
+    @objc func didChangeSegment() {
+        presenter.didSelectSegment(index: segmentedControl.selectedSegmentIndex)
+    }
 }
 
 // MARK: - Extensions -
 
 extension FavoritesViewController: FavoritesViewInterface {
+    func reloadData() {
+        emptyBackgroundView.isHidden = !presenter.items.isEmpty
+        tableView.reloadData()
+    }
+    
+    func removeItem(at indexPath: IndexPath) {
+        tableView.beginUpdates()
+        tableView.deleteRows(at: [indexPath], with: .right)
+        tableView.endUpdates()
+    }
+    
+}
+
+extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        presenter.items.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let item = presenter.item(for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteTableViewCell.identifier, for: indexPath) as! FavoriteTableViewCell
+        cell.configure(item)
+        cell.layoutIfNeeded()
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        presenter.didSelectItem(indexPath: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            presenter.swapToRemove(indexPath: indexPath)
+        }
+    }
 }

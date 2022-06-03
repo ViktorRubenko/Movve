@@ -14,6 +14,7 @@ protocol MovieDBMapperInterface {
     func movieToMovieDetailsModel(_ movie: MovieDetails) -> MovieDetailsModel
     func castMemberToCastMemberModel(_ castMember: CastMember) -> CastMemberModel
     func tvShowToTVShowDetailsModel(_ tvShow: TVShowDetails) -> TVShowDetailsModel
+    func favoriteDataModelToFavoriteModel(_ dataModel: FavoriteDataModel) -> FavoriteModel
 }
 
 final class Mapper {
@@ -26,6 +27,18 @@ final class Mapper {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.date(from: string)
+    }
+    
+    private func releaseYearFromDBDate(_ string: String) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy"
+        let releaseYear: String?
+        if let date = movieDBDateToDate(string) {
+            releaseYear = dateFormatter.string(from: date)
+        } else {
+            releaseYear = nil
+        }
+        return releaseYear
     }
     
     private func runtimeToDuration(_ runtime: Double) -> String {
@@ -142,6 +155,18 @@ extension Mapper: MovieDBMapperInterface {
             rating: tvShow.voteAverage,
             overview: tvShow.overview,
             homepage: URL(string: tvShow.homepage ?? "")
+        )
+    }
+    
+    func favoriteDataModelToFavoriteModel(_ dataModel: FavoriteDataModel) -> FavoriteModel {
+        FavoriteModel(
+            id: dataModel.id,
+            title: dataModel.title,
+            releaseYear: releaseYearFromDBDate(dataModel.releaseDate),
+            rating: dataModel.rating,
+            posterURL: dataModel.posterPath != nil ? Constants.ImagesURL.w300.appendingPathComponent(dataModel.posterPath!) : nil,
+            votes: dataModel.votes,
+            genres: dataModel.genres.joined(separator: ", ")
         )
     }
 }
