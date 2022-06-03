@@ -14,6 +14,8 @@ class DetailsViewController: UIViewController {
     var posterHeight: Constraint!
     var prevNavBarScrollAppearance: UINavigationBarAppearance?
     var prevNavBarStandardAppearance: UINavigationBarAppearance?
+    var prevNavBarStandardAppearanceCompact: UINavigationBarAppearance?
+    var prevNavBarScrollAppearanceCompact: UINavigationBarAppearance?
     
     lazy var returnNavButton: UIBarButtonItem = {
         let button = UIButton(type: .custom)
@@ -75,6 +77,8 @@ class DetailsViewController: UIViewController {
         guard let prevScrollAppearance = prevNavBarScrollAppearance, let prevSdAppearance = prevNavBarStandardAppearance else {
             return
         }
+        prevSdAppearance.titleTextAttributes = [.foregroundColor: UIColor.appTextColor]
+        prevScrollAppearance.titleTextAttributes = [.foregroundColor: UIColor.appTextColor]
         navigationController?.navigationBar.standardAppearance = prevSdAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = prevScrollAppearance
     }
@@ -119,3 +123,4 @@ extension DetailsViewController: UIScrollViewDelegate {
             updateNavBarTransparency(offset: offset)
     }
 }
+//

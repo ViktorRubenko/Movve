@@ -51,14 +51,8 @@ final class FavoritesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationItem.title = "Favorites"
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         presenter.loadData()
     }
-
 }
 
 private extension FavoritesViewController {
@@ -92,6 +86,7 @@ private extension FavoritesViewController {
     }
     
     func setupNavigationItem() {
+        navigationItem.title = "Favorites"
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "arrow.up.arrow.down.circle"),
             style: .plain,
@@ -144,6 +139,7 @@ extension FavoritesViewController: UITableViewDelegate, UITableViewDataSource {
         let item = presenter.item(for: indexPath)
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteTableViewCell.identifier, for: indexPath) as! FavoriteTableViewCell
         cell.configure(item)
+        cell.selectionStyle = .none
         return cell
     }
     
