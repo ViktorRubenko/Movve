@@ -9,6 +9,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class SearchViewController: UIViewController {
 
@@ -25,6 +26,7 @@ final class SearchViewController: UIViewController {
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44
+        tableView.keyboardDismissMode = .onDrag
         tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
         return tableView
     }()
@@ -35,14 +37,21 @@ final class SearchViewController: UIViewController {
         sc.searchBar.scopeButtonTitles = presenter.scopes
         sc.searchBar.showsCancelButton = false
         sc.hidesNavigationBarDuringPresentation = false
+        sc.searchBar.keyboardAppearance = .dark
         return sc
     }()
+    
+    private var setFirstResponser = true
+    private var keyboardShowNotification: Any!
+    private var keyboardHideNotification: Any!
+    private var tableBottomConstraint: Constraint!
 
     // MARK: - Lifecycle -
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationItem()
+        setupGestureRecognizers()
         setupViews()
         setupConstraints()
     }
@@ -51,17 +60,22 @@ final class SearchViewController: UIViewController {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
         setupNavigationAppearance()
+        setupObservers()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
+        removeObservers()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.searchController.searchBar.searchTextField.becomeFirstResponder()
+        if setFirstResponser {
+            setFirstResponser = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.searchController.searchBar.searchTextField.becomeFirstResponder()
+            }
         }
     }
 }
@@ -78,7 +92,7 @@ private extension SearchViewController {
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+            tableBottomConstraint = make.bottom.equalToSuperview().constraint
         }
     }
     
@@ -93,6 +107,55 @@ private extension SearchViewController {
         appearance.configureWithTransparentBackground()
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
+    func setupObservers() {
+        keyboardHideNotification = NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil)
+        
+        keyboardShowNotification = NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil)
+    }
+    
+    func removeObservers() {
+        NotificationCenter.default.removeObserver(keyboardShowNotification!)
+        NotificationCenter.default.removeObserver(keyboardHideNotification!)
+    }
+    
+    func setupGestureRecognizers() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        tapRecognizer.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapRecognizer)
+    }
+}
+
+// MARK: - Private Actions -
+
+private extension SearchViewController {
+    @objc func keyboardWillShow(_ notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?
+                .cgRectValue else { return }
+        tableBottomConstraint.deactivate()
+        tableView.snp.makeConstraints { make in
+            tableBottomConstraint = make.bottom.equalToSuperview().offset(-keyboardSize.height).constraint
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: NSNotification) {
+        tableBottomConstraint.deactivate()
+        tableView.snp.makeConstraints { make in
+            tableBottomConstraint = make.bottom.equalToSuperview().constraint
+        }
+    }
+    
+    @objc func handleTap(_ recognizer: UITapGestureRecognizer) {
+        searchController.searchBar.endEditing(true)
     }
 }
 
