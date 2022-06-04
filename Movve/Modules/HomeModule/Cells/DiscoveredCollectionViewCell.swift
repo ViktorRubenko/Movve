@@ -90,7 +90,7 @@ extension DiscoveredCollectionViewCell {
         }
     }
     
-    func configure(_ model: DiscoveredModel) {
+    func configure(_ model: ItemModel) {
         nameLabel.text = model.name
         releaseDateLabel.text = model.releaseDate
         

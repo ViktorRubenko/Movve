@@ -11,8 +11,8 @@
 import Foundation
 
 final class FavoritesInteractor {
-    var dataService: DataServiceInterface
-    var mapper: MovieDBMapperInterface
+    private let dataService: DataServiceInterface
+    private let  mapper: MovieDBMapperInterface
     
     init(
         dataService: DataServiceInterface = RealmDataService.shared,

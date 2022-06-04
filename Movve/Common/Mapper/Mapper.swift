@@ -9,8 +9,8 @@ import Foundation
 
 
 protocol MovieDBMapperInterface {
-    func discoveredMovieToDiscoveredModel(_ movie: Movie) -> DiscoveredModel
-    func discoveredTVShowToDiscoveredModel(_ tvShow: TVShow) -> DiscoveredModel
+    func movieToItemModel(_ movie: Movie) -> ItemModel
+    func tvShowToItemModel(_ tvShow: TVShow) -> ItemModel
     func movieToMovieDetailsModel(_ movie: MovieDetails) -> MovieDetailsModel
     func castMemberToCastMemberModel(_ castMember: CastMember) -> CastMemberModel
     func tvShowToTVShowDetailsModel(_ tvShow: TVShowDetails) -> TVShowDetailsModel
@@ -59,32 +59,34 @@ final class Mapper {
 
 extension Mapper: MovieDBMapperInterface {
 
-    func discoveredMovieToDiscoveredModel(_ movie: Movie) -> DiscoveredModel {
+    func movieToItemModel(_ movie: Movie) -> ItemModel {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d, yyyy"
         let releaseDate: String
-        if let date = movieDBDateToDate(movie.releaseDate) {
+        if let movieDate = movie.releaseDate, let date = movieDBDateToDate(movieDate) {
             releaseDate = dateFormatter.string(from: date)
         } else {
             releaseDate = ""
         }
-        return DiscoveredModel(
+        return ItemModel(
+            id: movie.id,
             name: movie.title,
             imageURL: movie.posterPath != nil ? Constants.ImagesURL.w500.appendingPathComponent(movie.posterPath!) : nil,
             releaseDate: releaseDate
         )
     }
     
-    func discoveredTVShowToDiscoveredModel(_ tvShow: TVShow) -> DiscoveredModel {
+    func tvShowToItemModel(_ tvShow: TVShow) -> ItemModel {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d, yyyy"
         let releaseDate: String
-        if let date = movieDBDateToDate(tvShow.firstAirDate) {
+        if let tvShowDate = tvShow.firstAirDate, let date = movieDBDateToDate(tvShowDate) {
             releaseDate = dateFormatter.string(from: date)
         } else {
             releaseDate = ""
         }
-        return DiscoveredModel(
+        return ItemModel(
+            id: tvShow.id,
             name: tvShow.name,
             imageURL: tvShow.posterPath != nil ? Constants.ImagesURL.w500.appendingPathComponent(tvShow.posterPath!) : nil,
             releaseDate: releaseDate

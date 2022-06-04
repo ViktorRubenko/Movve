@@ -44,6 +44,7 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupNavigationItem()
         setupViews()
         
         presenter.loadMovies()
@@ -66,8 +67,8 @@ extension HomeViewController: HomeViewInterface {
 
 // MARK: - Methods -
 
-extension HomeViewController {
-    private func setupViews() {
+private extension HomeViewController {
+    func setupViews() {
         view.backgroundColor = .appBackground
         
         view.addSubview(collectionView)
@@ -77,7 +78,7 @@ extension HomeViewController {
         }
     }
     
-    private func createSectionLayout(section: Int) -> NSCollectionLayoutSection {
+    func createSectionLayout(section: Int) -> NSCollectionLayoutSection {
         let sectionType = presenter.sections[section]
         switch sectionType {
         case .movies:
@@ -128,6 +129,21 @@ extension HomeViewController {
             
             return section
         }
+    }
+    
+    func setupNavigationItem() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: .searchIcon,
+            style: .plain,
+            target: self,
+            action: #selector(didTapSearchButton)
+        )
+    }
+}
+
+private extension HomeViewController {
+    @objc func didTapSearchButton() {
+        presenter.tapSearchButton()
     }
 }
 

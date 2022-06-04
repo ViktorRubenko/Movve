@@ -51,6 +51,7 @@ final class FavoritesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupNavigationAppearance()
         presenter.loadData()
     }
 }
@@ -93,6 +94,13 @@ private extension FavoritesViewController {
             target: self,
             action: #selector(didTapSortButton)
         )
+    }
+    
+    func setupNavigationAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
 
     // MARK: - Actions -

@@ -18,6 +18,9 @@ protocol MovieDBServiceInterface {
     func getTVShowDetails(id: Int, completion: @escaping (Result<TVShowDetails, Error>) -> Void)
     func getTVShowVideos(id: Int, completion: @escaping (Result<[Video], Error>) -> Void)
     func getTVShowCredits(id: Int, completion: @escaping (Result<Credits, Error>) -> Void)
+    
+    func searchMovies(query: String, page: Int, completion: @escaping(Result<[Movie], Error>) -> Void)
+    func searchTVShows(query: String, page: Int, completion: @escaping(Result<[TVShow], Error>) -> Void)
 }
 
 final class MovieDBService {
@@ -44,7 +47,7 @@ extension MovieDBService: MovieDBServiceInterface {
             encoder: .urlEncodedForm
         )
             .validate()
-            .responseDecodable(of: DiscoverTVShows.self) { dataResponse in
+            .responseDecodable(of: TVShowsResponse.self) { dataResponse in
                 switch dataResponse.result {
                 case .success(let tvShows):
                     completion(.success(tvShows.results))
@@ -174,6 +177,43 @@ extension MovieDBService: MovieDBServiceInterface {
                 switch dataResponse.result {
                 case .success(let videos):
                     completion(.success(videos.results))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
+    
+    func searchMovies(query: String, page: Int, completion: @escaping (Result<[Movie], Error>) -> Void) {
+        AF.request(
+            Constants.API.searchMovies,
+            method: .get,
+            parameters: ["api_key": apiKey, "page": String(page), "query": query],
+            encoder: .urlEncodedForm
+        )
+            .validate()
+            .responseDecodable(of: MoviesResponse.self) { dataResponse in
+                switch dataResponse.result {
+                case .success(let response):
+                    completion(.success(response.results))
+                case .failure(let error):
+                    print(error)
+                    completion(.failure(error))
+                }
+            }
+    }
+    
+    func searchTVShows(query: String, page: Int, completion: @escaping (Result<[TVShow], Error>) -> Void) {
+        AF.request(
+            Constants.API.searchTVShows,
+            method: .get,
+            parameters: ["api_key": apiKey, "page": String(page), "query": query],
+            encoder: .urlEncodedForm
+        )
+            .validate()
+            .responseDecodable(of: TVShowsResponse.self) { dataResponse in
+                switch dataResponse.result {
+                case .success(let response):
+                    completion(.success(response.results))
                 case .failure(let error):
                     completion(.failure(error))
                 }

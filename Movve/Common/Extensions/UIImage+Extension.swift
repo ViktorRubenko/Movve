@@ -23,4 +23,7 @@ extension UIImage {
     static var returnNavBarIcon: UIImage? {
         UIImage(named: "chevron_left_fill")
     }
+    static var searchIcon: UIImage? {
+        UIImage(systemName: "magnifyingglass.circle")
+    }
 }

@@ -58,8 +58,8 @@ extension HomePresenter: HomePresenterInterface {
         [.movies, .tvShows]
     }
     
-    func movie(at indexPath: IndexPath) -> DiscoveredModel {
-        mapper.discoveredMovieToDiscoveredModel(movies[indexPath.row])
+    func movie(at indexPath: IndexPath) -> ItemModel {
+        mapper.movieToItemModel(movies[indexPath.row])
     }
     
     func loadMovies() {
@@ -77,8 +77,8 @@ extension HomePresenter: HomePresenterInterface {
         tvShows.count
     }
     
-    func tvShow(at indexPath: IndexPath) -> DiscoveredModel {
-        mapper.discoveredTVShowToDiscoveredModel(tvShows[indexPath.row])
+    func tvShow(at indexPath: IndexPath) -> ItemModel {
+        mapper.tvShowToItemModel(tvShows[indexPath.row])
     }
     
     func loadTVShows() {
@@ -100,5 +100,9 @@ extension HomePresenter: HomePresenterInterface {
         case .tvShows:
             wireframe.navigateToTVDetails(id: tvShows[indexPath.row].id)
         }
+    }
+    
+    func tapSearchButton() {
+        wireframe.navigationToSearch()
     }
 }

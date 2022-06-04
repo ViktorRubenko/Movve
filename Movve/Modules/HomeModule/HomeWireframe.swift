@@ -38,6 +38,9 @@ extension HomeWireframe: HomeWireframeInterface {
         navigationController?.pushWireframe(TVShowDetailsWireframe(tvShowId: id))
     }
     
+    func navigationToSearch() {
+        navigationController?.pushWireframe(SearchWireframe())
+    }
 }
 
 extension HomeWireframe: TabBarViewType {

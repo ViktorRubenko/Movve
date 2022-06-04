@@ -17,6 +17,7 @@ enum HomeSectionType {
 protocol HomeWireframeInterface: WireframeInterface {
     func navigateToMovieDetails(id: Int)
     func navigateToTVDetails(id: Int)
+    func navigationToSearch()
 }
 
 protocol HomeViewInterface: ViewInterface {
@@ -30,13 +31,14 @@ protocol HomePresenterInterface: PresenterInterface {
     
     var sections: [HomeSectionType] { get }
     
-    func movie(at indexPath: IndexPath) -> DiscoveredModel
+    func movie(at indexPath: IndexPath) -> ItemModel
     func loadMovies()
     
-    func tvShow(at indexPath: IndexPath) -> DiscoveredModel
+    func tvShow(at indexPath: IndexPath) -> ItemModel
     func loadTVShows()
     
     func itemSelected(at indexPath: IndexPath)
+    func tapSearchButton()
 }
 
 protocol HomeInteractorInterface: InteractorInterface {

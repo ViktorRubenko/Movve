@@ -1,5 +1,5 @@
 //
-//  DiscoverTVShows.swift
+//  TVShowsResponse.swift
 //  Movve
 //
 //  Created by Victor Rubenko on 30.05.2022.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DiscoverTVShows: Codable {
+struct TVShowsResponse: Codable {
     let page: Int
     let results: [TVShow]
     let totalPages: Int

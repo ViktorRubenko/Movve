@@ -14,6 +14,8 @@ enum Constants {
         static let tvshow = base.appendingPathComponent("/tv")
         static let discoverMovies = base.appendingPathComponent("/discover/movie")
         static let discoverTVShows = base.appendingPathComponent("/discover/tv")
+        static let searchMovies = base.appendingPathComponent("/search/movie")
+        static let searchTVShows = base.appendingPathComponent("/search/tv")
     }
     
     enum ImagesURL {

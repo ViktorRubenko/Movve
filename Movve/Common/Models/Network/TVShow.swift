@@ -8,7 +8,7 @@
 import Foundation
 
 struct TVShow: Codable {
-    let firstAirDate: String
+    let firstAirDate: String?
     let id: Int
     let name: String
     let overview: String
