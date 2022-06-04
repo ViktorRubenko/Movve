@@ -23,13 +23,20 @@ final class Mapper {
     
     private init() {}
     
-    private func movieDBDateToDate(_ string: String) -> Date? {
+    private func movieDBDateToDate(_ string: String?) -> Date? {
+        guard let string = string else {
+            return nil
+        }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.date(from: string)
     }
     
-    private func releaseYearFromDBDate(_ string: String) -> String? {
+    private func releaseYearFromDBDate(_ string: String?) -> String? {
+        guard let string = string else {
+            return nil
+        }
+
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy"
         let releaseYear: String?

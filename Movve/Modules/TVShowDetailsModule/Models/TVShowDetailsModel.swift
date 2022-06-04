@@ -10,7 +10,7 @@ import Foundation
 struct TVShowDetailsModel {
     let posterURL: URL?
     let title: String
-    let releaseYear: String
+    let releaseYear: String?
     let genres: String
     let duration: String
     let rating: Double

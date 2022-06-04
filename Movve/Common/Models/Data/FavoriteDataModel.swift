@@ -19,7 +19,7 @@ enum FavoriteModelKind: String {
 class FavoriteDataModel: Object {
     @objc dynamic var id = 0
     @objc dynamic var title = ""
-    @objc dynamic var releaseDate = ""
+    @objc dynamic var releaseDate: String? = nil
     @objc dynamic var dateAdded = Date()
     @objc dynamic var posterPath: String? = nil
     @objc dynamic var rating: Double = 0.0

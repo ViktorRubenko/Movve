@@ -90,13 +90,13 @@ extension PosterInfoView {
     func configure(
         posterURL: URL?,
         title: String,
-        releaseYear: String,
+        releaseYear: String?,
         genres: String,
         duration: String
     ) {
         
         titleLabel.text = title
-        infoLabel.text = "\(releaseYear) • \(genres) • \(duration)"
+        infoLabel.text = [releaseYear, genres, duration].compactMap{ $0 }.joined(separator: " • ")
         
         guard let posterURL = posterURL else {
             return

@@ -70,6 +70,7 @@ extension MovieDBService: MovieDBServiceInterface {
                 case .success(let tvShow):
                     completion(.success(tvShow))
                 case .failure(let error):
+                    print(error)
                     completion(.failure(error))
                 }
             }
