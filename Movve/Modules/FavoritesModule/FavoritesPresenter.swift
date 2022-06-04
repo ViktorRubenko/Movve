@@ -63,20 +63,24 @@ extension FavoritesPresenter: FavoritesPresenterInterface {
     
     func loadData() {
         let key: FavoriteModelSortedKey
+        let ascending: Bool
         switch currentSortOption {
         case .dateAdded:
             key = .dateAdded
+            ascending = false
         case .rating:
             key = .rating
+            ascending = false
         case .title:
             key = .title
+            ascending = true
         }
         
         switch currentFavorites {
             case .Movie:
-            _items = interactor.getFavoriteMovies(sortedBy: key, ascending: false)
+            _items = interactor.getFavoriteMovies(sortedBy: key, ascending: ascending)
             case .TVShow:
-            _items = interactor.getFavoriteTVShows(sortedBy: key, ascending: false)
+            _items = interactor.getFavoriteTVShows(sortedBy: key, ascending: ascending)
         }
         view.reloadData()
     }
