@@ -19,7 +19,7 @@ class CollectionHeaderView: UICollectionReusableView {
     
     let label: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 20, weight: .semibold)
+        label.font = .systemFont(ofSize: 18, weight: .medium)
         return label
     }()
     

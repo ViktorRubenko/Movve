@@ -26,4 +26,7 @@ extension UIImage {
     static var searchIcon: UIImage? {
         UIImage(systemName: "magnifyingglass.circle")
     }
+    static var logo: UIImage? {
+        UIImage(named: "logo")
+    }
 }

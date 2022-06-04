@@ -99,6 +99,7 @@ private extension FavoritesViewController {
     func setupNavigationAppearance() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .appBackground.withAlphaComponent(0.95)
         navigationController?.navigationBar.standardAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }

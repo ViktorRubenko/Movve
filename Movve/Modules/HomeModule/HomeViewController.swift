@@ -51,6 +51,11 @@ final class HomeViewController: UIViewController {
         presenter.loadTVShows()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationAppearance()
+    }
+    
 }
 
 // MARK: - Extensions -
@@ -101,7 +106,7 @@ private extension HomeViewController {
             let section = NSCollectionLayoutSection(group: group)
             section.boundarySupplementaryItems = [sectionHeader]
             section.orthogonalScrollingBehavior = .continuous
-            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 10, trailing: 15)
             
             
             return section
@@ -125,7 +130,7 @@ private extension HomeViewController {
             let section = NSCollectionLayoutSection(group: group)
             section.boundarySupplementaryItems = [sectionHeader]
             section.orthogonalScrollingBehavior = .continuous
-            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 10, trailing: 15)
             
             return section
         }
@@ -138,6 +143,22 @@ private extension HomeViewController {
             target: self,
             action: #selector(didTapSearchButton)
         )
+        
+        let logoImageView = UIImageView(image: .logo)
+        let imageItem = UIBarButtonItem(customView: logoImageView)
+        let currWidth = imageItem.customView?.widthAnchor.constraint(equalToConstant: 122)
+        let currHeight = imageItem.customView?.heightAnchor.constraint(equalToConstant: 28)
+        currWidth?.isActive = true
+        currHeight?.isActive = true
+        navigationItem.leftBarButtonItem = imageItem
+    }
+    
+    func setupNavigationAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .appBackground.withAlphaComponent(0.95)
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
     }
 }
 
